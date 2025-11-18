@@ -1,12 +1,12 @@
 {
 	"meta":{
 		"version": "v1",
-		"app_name": "Campaign_Channel_app",
-		"log_prefix": "Campaign_app"
+		"app_name": "Campaign Channel",
+		"log_prefix": "Campaign_Channel_app"
 	},
 	"database":{
 		"pool":{
-			"name": "Campaign_Channel_db_bool",
+			"name": "Campaign_Channel_app_db_bool",
 			"size": 10,
 			"reset_session": true
 		},
