@@ -15,7 +15,7 @@
 				"database": "Campaign_Channel",
 				"user": "Campaign_Channel_user",
 				"host": "localhost",
-				"port": 8889
+				"port": 3306
 			}
 		}
 	}
