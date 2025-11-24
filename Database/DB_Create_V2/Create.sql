@@ -8,6 +8,10 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
+CREATE DATABASE IF NOT EXISTS `Campaign_Channel` 
+    DEFAULT CHARACTER SET utf8mb4;
+
+COMMIT;
 -- -----------------------------------------------------
 -- Schema Campaign_Channel
 
@@ -143,3 +147,23 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+/* ******************************************
+  Drop and create the Campaign_Channel User
+********************************************/
+
+-- Drop user if exists
+DROP USER IF EXISTS 'Campaign_Channel_user'@'%';
+
+-- Create user if not exists
+CREATE USER IF NOT EXISTS 'Campaign_Channel_user'@'%';
+GRANT ALL PRIVILEGES ON *.* TO 'Campaign_Channel_user'@'%'; 
+ALTER USER 'Campaign_Channel_user'@'%' 
+	REQUIRE NONE WITH MAX_QUERIES_PER_HOUR 0 
+	MAX_CONNECTIONS_PER_HOUR 0 
+	MAX_UPDATES_PER_HOUR 0 
+	MAX_USER_CONNECTIONS 0;
+GRANT ALL PRIVILEGES ON `Campaign\_Channel\_user\_%`.* 
+	TO 'Campaign_Channel_user'@'%';
+GRANT ALL PRIVILEGES ON `Campaign\_Channel`.* 
+	TO 'Campaign_Channel_user'@'%' WITH GRANT OPTION;
