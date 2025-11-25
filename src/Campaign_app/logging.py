@@ -2,7 +2,7 @@
 
 import logging
 import logging.handlers
-from Campaign_app.settings import Settings
+from campaign_app.settings import Settings
 import os
 
 class LoggingService():

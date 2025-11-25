@@ -1,7 +1,7 @@
 """Implements the applicatin user interface."""
 
-from Campaign_app.application_base import ApplicationBase
-from Campaign_app.service_layer.app_services import AppServices
+from campaign_app.application_base import ApplicationBase
+from campaign_app.service_layer.app_services import AppServices
 import inspect
 import json
 
@@ -13,7 +13,7 @@ class UserInterface(ApplicationBase):
         self.META = config["meta"]
         super().__init__(subclass_name=self.__class__.__name__, 
 				   logfile_prefix_name=self.META["log_prefix"])
-        self.DB = AppServices(config)
+        self.app_services = AppServices(config)
         self._logger.log_debug(f'{inspect.currentframe().f_code.co_name}:It works!')
 
 
@@ -21,4 +21,5 @@ class UserInterface(ApplicationBase):
 
     def start(self):
         """Start main user interface."""
+        print(self.app_services.get_all_campaigns())
         self._logger.log_debug(f'{inspect.currentframe().f_code.co_name}: User interface started!')

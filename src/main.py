@@ -2,7 +2,7 @@
 
 import json
 from argparse import ArgumentParser
-from Campaign_app.presentation_layer.user_interface import UserInterface
+from campaign_app.presentation_layer.user_interface import UserInterface
 
 
 

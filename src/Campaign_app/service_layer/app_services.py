@@ -1,7 +1,7 @@
 """Implements AppServices Class."""
 
-from Campaign_app.application_base import ApplicationBase
-from Campaign_app.persistence_layer.mysql_persistence_wrapper import MySQLPersistenceWrapper
+from campaign_app.application_base import ApplicationBase
+from campaign_app.persistence_layer.mysql_persistence_wrapper import MySQLPersistenceWrapper
 import inspect
 
 class AppServices(ApplicationBase):
@@ -14,3 +14,10 @@ class AppServices(ApplicationBase):
 				   logfile_prefix_name=self.META["log_prefix"])
         self.DB = MySQLPersistenceWrapper(config)
         self._logger.log_debug(f'{inspect.currentframe().f_code.co_name}:It works!')
+
+
+    def get_all_campaigns(self):
+        try:
+            return self.DB.select_all_campaigns()
+        except Exception as e:
+            self._logger.log_error(f'{inspect.currentframe().f_code.co_name}:{e}')

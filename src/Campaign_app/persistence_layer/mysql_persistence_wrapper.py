@@ -1,6 +1,6 @@
 """Defines the MySQLPersistenceWrapper class."""
 
-from Campaign_app.application_base import ApplicationBase
+from campaign_app.application_base import ApplicationBase
 from mysql import connector
 from mysql.connector.pooling import (MySQLConnectionPool)
 import inspect
@@ -35,8 +35,8 @@ class MySQLPersistenceWrapper(ApplicationBase):
 
 		# SQL Query Constants
 		self.SELECT_ALL_CAMPAIGNS = \
-			f"SELECT idCampaign, Campaign_Name, StartDate, EndDate, idCompany, idCampaign_Category, Budget, Revenue, NetProfit" \
-			f"From Campaign"
+			f"SELECT idCampaign, Campaign_Name, StartDate, EndDate, idCompany, idCampaign_Category, Budget, Revenue, NetProfit " \
+			f"FROM Campaign"
 
 
 
