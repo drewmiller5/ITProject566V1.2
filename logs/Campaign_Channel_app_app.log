@@ -1,5 +1,2 @@
-DEBUG:MySQLPersistenceWrapper:2025-11-17 21:17:40,241:__init__:It works!
-DEBUG:MySQLPersistenceWrapper:2025-11-17 21:17:40,242:__init__: DB Connection Config Dict: {'database': 'Campaign_Channel', 'user': 'Campaign_Channel_user', 'host': 'localhost', 'port': 3306}
-DEBUG:AppServices:2025-11-17 21:17:40,243:__init__:It works!
-DEBUG:UserInterface:2025-11-17 21:17:40,243:__init__:It works!
-DEBUG:UserInterface:2025-11-17 21:17:40,244:start: User interface started!
+DEBUG:UserInterface:2025-11-24 19:47:13,887:__init__:It works!
+DEBUG:UserInterface:2025-11-24 19:47:13,896:start: User interface started!
