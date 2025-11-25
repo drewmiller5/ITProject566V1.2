@@ -29,18 +29,33 @@ class MySQLPersistenceWrapper(ApplicationBase):
 		self._logger.log_debug(f'{inspect.currentframe().f_code.co_name}: DB Connection Config Dict: {self.DB_CONFIG}')
 
 		# Database Connection
-		#self._connection_pool = \
-		#	self._initialize_database_connection_pool(self.DB_CONFIG)
+		self._connection_pool = \
+			self._initialize_database_connection_pool(self.DB_CONFIG)
 		
 
-		# SQL String Constants
-
+		# SQL Query Constants
+		self.SELECT_ALL_CAMPAIGNS = \
+			f"SELECT idCampaign, Campaign_Name, StartDate, EndDate, idCompany, idCampaign_Category, Budget, Revenue, NetProfit" \
+			f"From Campaign"
 
 
 
 
 	# MySQLPersistenceWrapper Methods
-
+	def select_all_campaigns(self)->list:
+		"Returns a list of all campaigns"
+		cursor = None
+		results = None
+		try:
+			connection = self._connection_pool.get_connection()
+			with connection:
+				cursor = connection.cursor()
+				with cursor:
+					cursor.execute(self.SELECT_ALL_CAMPAIGNS)
+					results = cursor.fetchall()
+			return results
+		except Exception as e:
+			self._logger.log_error(f'Problem with select_all_campaigns(): {e}')
 
 
 
