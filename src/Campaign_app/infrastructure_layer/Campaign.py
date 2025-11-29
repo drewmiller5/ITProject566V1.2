@@ -1,5 +1,5 @@
 import json
-from infrastructure_layer.Channel import Channel
+from campaign_app.infrastructure_layer.Channel import Channel
 from typing import List
 
 class Campaign():
