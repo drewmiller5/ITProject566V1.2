@@ -2,3 +2,8 @@ DEBUG:AppServices:2025-11-28 17:12:24,197:__init__:It works!
 DEBUG:AppServices:2025-11-28 17:12:24,223:__init__:It works!
 DEBUG:UserInterface:2025-11-28 17:12:24,224:__init__:It works!
 DEBUG:UserInterface:2025-11-28 17:12:24,225:start: User interface started!
+DEBUG:MySQLPersistenceWrapper:2025-11-28 20:53:21,218:__init__:It works!
+DEBUG:MySQLPersistenceWrapper:2025-11-28 20:53:21,219:__init__: DB Connection Config Dict: {'database': 'Campaign_Channel', 'user': 'Campaign_Channel_user', 'host': 'localhost', 'port': 3306}
+DEBUG:MySQLPersistenceWrapper:2025-11-28 20:53:21,219:Creating connection pool...
+DEBUG:MySQLPersistenceWrapper:2025-11-28 20:53:21,332:_initialize_database_connection_pool: Connection pool successfully created!
+DEBUG:AppServices:2025-11-28 20:53:21,333:__init__:It works!
