@@ -1,8 +1,6 @@
 """Implements the applicatin user interface."""
-
 from campaign_app.application_base import ApplicationBase
 from campaign_app.service_layer.app_services import AppServices
-from prettytable import PrettyTable
 import sys
 
 class UserInterface(ApplicationBase):
