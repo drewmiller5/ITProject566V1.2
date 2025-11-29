@@ -3,6 +3,7 @@
 import json
 from argparse import ArgumentParser
 from campaign_app.presentation_layer.user_interface import UserInterface
+from campaign_app.service_layer.app_services import AppServices
 
 
 
@@ -14,7 +15,8 @@ def main():
 		config = None
 		with open(args.configfile, 'r') as f:
 			config = json.loads(f.read())
-
+	
+	
 	ui = UserInterface(config)
 	ui.start()
 			

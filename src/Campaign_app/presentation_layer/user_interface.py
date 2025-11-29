@@ -2,8 +2,8 @@
 
 from campaign_app.application_base import ApplicationBase
 from campaign_app.service_layer.app_services import AppServices
-import inspect
-import json
+from prettytable import PrettyTable
+import sys
 
 class UserInterface(ApplicationBase):
     """UserInterface Class Definition."""
@@ -14,12 +14,20 @@ class UserInterface(ApplicationBase):
         super().__init__(subclass_name=self.__class__.__name__, 
 				   logfile_prefix_name=self.META["log_prefix"])
         self.app_services = AppServices(config)
-        self._logger.log_debug(f'{inspect.currentframe().f_code.co_name}:It works!')
+    def display_menu(self) ->None:
+        """Display the menu"""
+        print(f"\t\tCampaign Channel Application Menu")
+        print()
+        print(f"\t1. List Campaigns")
+        print(f"\t2. List Channel")
+        print(f"\t3. Add Campaign")
+        print(f"\t4 Record Campaign")
+        print(f"\t5. Add Channel")
+        print(f"t\6. Exit")
+        print()
 
 
 
 
-    def start(self):
-        """Start main user interface."""
-        print(self.app_services.get_all_campaigns())
-        self._logger.log_debug(f'{inspect.currentframe().f_code.co_name}: User interface started!')
+    def start(self) ->None:
+        self.display_menu()
