@@ -2,6 +2,7 @@
 
 from campaign_app.application_base import ApplicationBase
 from campaign_app.service_layer.app_services import AppServices
+from campaign_app.infrastructure_layer.Campaign import Campaign
 from prettytable import PrettyTable
 import sys
 
