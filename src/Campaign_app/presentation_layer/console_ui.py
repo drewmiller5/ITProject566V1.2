@@ -22,7 +22,7 @@ class ConsoleUI(ApplicationBase):
     
     # Public Methods
     def display_menu(self) ->None:
-        """Display the menu a"""
+        """Display the menu"""
         print(f"\n\n\t\tCampaign Channel Application Menu")
         print()
         print(f"\t1. List Campaigns")
