@@ -68,7 +68,7 @@ class MySQLPersistenceWrapper(ApplicationBase):
 					campaign_list = self._populate_campaign_objects(results)
 			for campaign in campaign_list:
 				channel_list = \
-					self.select_all_channel_for_camapign_id(Campaign.idCampaign)
+					self.select_all_Channels_for_Campaign_id(Campaign.idCampaign)
 				self._logger.log_debug(f'{inspect.currentframe().f_code.co_name}: \
 						   {campaign_list}')
 				campaign.training = self._populate_channel_objects(channel_list)

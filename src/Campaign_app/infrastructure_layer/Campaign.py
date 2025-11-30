@@ -1,5 +1,7 @@
 import json
 from campaign_app.infrastructure_layer.channel import Channel
+from campaign_app.infrastructure_layer.campaign_category import Campaign_Category
+from campaign_app.infrastructure_layer.company import Company
 from typing import List
 
 class Campaign():

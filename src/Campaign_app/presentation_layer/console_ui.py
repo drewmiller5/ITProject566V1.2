@@ -41,7 +41,7 @@ class ConsoleUI(ApplicationBase):
         match menu_choice[0]:
             case '1': self.list_campaigns()
             case '2': self.list_channel()
-            case '3': self.add_channel()
+            case '3': self.add_campaign()
             case '4': self.record_campaign()
             case '5': self.add_channel()
             case '6': sys.exit()
