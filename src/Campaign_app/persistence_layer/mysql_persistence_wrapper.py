@@ -6,8 +6,8 @@ from mysql.connector.pooling import (MySQLConnectionPool)
 import inspect
 import json
 from typing import List
-from campaign_app.infrastructure_layer.Campaign import Campaign
-from campaign_app.infrastructure_layer.Channel import Channel
+from campaign_app.infrastructure_layer.campaign import Campaign
+from campaign_app.infrastructure_layer.channel import Channel
 from enum import Enum
 
 class MySQLPersistenceWrapper(ApplicationBase):

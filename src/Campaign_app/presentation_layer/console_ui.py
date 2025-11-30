@@ -2,12 +2,15 @@
 
 from campaign_app.application_base import ApplicationBase
 from campaign_app.service_layer.app_services import AppServices
-from campaign_app.infrastructure_layer.Campaign import Campaign
+from campaign_app.infrastructure_layer.campaign import Campaign
 from prettytable import PrettyTable
+from datetime import datetime
 import sys
+import inspect
+
 
 class ConsoleUI(ApplicationBase):
-    """UserInterface Class Definition."""
+    """ConsoleUI Class Definition."""
     def __init__(self, config:dict)->None:
         """Initializes object. """
         self._config_dict = config
@@ -19,7 +22,7 @@ class ConsoleUI(ApplicationBase):
     
     # Public Methods
     def display_menu(self) ->None:
-        """Display the menu"""
+        """Display the menu a"""
         print(f"\n\n\t\tCampaign Channel Application Menu")
         print()
         print(f"\t1. List Campaigns")
@@ -64,6 +67,9 @@ class ConsoleUI(ApplicationBase):
             campaign_table.add_divider()
             channel_table.clear_rows()
         print(campaign_table)
+
+        self._logger.log_debug(f'{inspect.currentframe().f_code.co_name}:' \
+                               f'{campaigns}')
 
 
     def list_channel(self)->None:

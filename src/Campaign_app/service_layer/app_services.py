@@ -2,8 +2,8 @@
 
 from campaign_app.application_base import ApplicationBase
 from campaign_app.persistence_layer.mysql_persistence_wrapper import MySQLPersistenceWrapper
-from campaign_app.infrastructure_layer.Campaign import Campaign
-from campaign_app.infrastructure_layer.Channel import Channel
+from campaign_app.infrastructure_layer.campaign import Campaign
+from campaign_app.infrastructure_layer.channel import Channel
 import inspect
 from typing import List
 
