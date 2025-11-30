@@ -38,7 +38,7 @@ class MySQLPersistenceWrapper(ApplicationBase):
 		
 		# Campaign Columns ENUMS
 		self.CampaignColumns = \
-			Enum('CampaignColumns',[('idCampaign',0),('Campaign_name', 1),('StartDate', 2),('EndDate', 3),
+			Enum('CampaignColumns',[('idCampaign',0),('Campaign_Name', 1),('StartDate', 2),('EndDate', 3),
 						   ('idCompany', 4),('idCampaign_Category', 5),('Budget', 6),('Revenue', 7),('NetProfit', 8)])
 		
 		# Channel Columns ENUMS
@@ -106,9 +106,10 @@ class MySQLPersistenceWrapper(ApplicationBase):
 			self._logger.log_debug(f'Creating connection pool...')
 			cnx_pool = \
 				MySQLConnectionPool(pool_name = self.DATABASE["pool"]["name"],
-					pool_size=self.DATABASE["pool"]["size"],
-					pool_reset_session=self.DATABASE["pool"]["reset_session"],
-					**config)
+						pool_size=self.DATABASE["pool"]["size"],
+						pool_reset_session=self.DATABASE["pool"]["reset_session"],
+						use_pure=self.DATABASE["pool"]["use_pure"],
+						**config)
 			self._logger.log_debug(f'{inspect.currentframe().f_code.co_name}: Connection pool successfully created!')
 			return cnx_pool
 		except connector.Error as err:
@@ -125,7 +126,7 @@ class MySQLPersistenceWrapper(ApplicationBase):
 			for row in results:
 				campaign = Campaign()
 				campaign.id = row[self.CampaignColumns['idCampaign'].value]
-				campaign.Campaign_Name = row[self.CampaignColumns['Campaign_name'].value]
+				campaign.Campaign_Name = row[self.CampaignColumns['Campaign_Name'].value]
 				campaign.StartDate = row[self.CampaignColumns['StartDate'].value]
 				campaign.EndDate = row[self.CampaignColumns['EndDate'].value]
 				campaign.idCompany = row[self.CampaignColumns['idCompany'].value]
