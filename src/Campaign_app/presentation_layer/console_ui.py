@@ -5,7 +5,7 @@ from campaign_app.service_layer.app_services import AppServices
 from prettytable import PrettyTable
 import sys
 
-class UserInterface(ApplicationBase):
+class ConsoleUI(ApplicationBase):
     """UserInterface Class Definition."""
     def __init__(self, config:dict)->None:
         """Initializes object. """
@@ -85,4 +85,4 @@ class UserInterface(ApplicationBase):
     def start(self) ->None:
         while True:
             self.display_menu()
-            self.process_menu_choice
+            self.process_menu_choice()

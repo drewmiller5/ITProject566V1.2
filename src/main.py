@@ -2,8 +2,7 @@
 
 import json
 from argparse import ArgumentParser
-from campaign_app.presentation_layer.user_interface import UserInterface
-from campaign_app.service_layer.app_services import AppServices
+from campaign_app.presentation_layer.console_ui import ConsoleUI
 
 
 
@@ -17,8 +16,8 @@ def main():
 			config = json.loads(f.read())
 	
 	
-	ui = UserInterface(config)
-	ui.start()
+		ui = ConsoleUI(config)
+		ui.start()
 			
 		
 

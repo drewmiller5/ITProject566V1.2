@@ -11,6 +11,7 @@ class ApplicationBase(ABC):
         """Instantiate instance."""
         self._settings = Settings().read_settings_file_from_location()
         self._logger = LoggingService(subclass_name, logfile_prefix_name)
+        self._date_format_string = '%Y-%m-%d %H:%M:%S'
         
        
     
