@@ -27,7 +27,7 @@ class Campaign():
     def to_json(self)->str:
         campaign_dict = {}
         campaign_dict['idCampaign'] = self.idCampaign
-        campaign_dict['Campaign_name'] = self.Campaign_Name
+        campaign_dict['Campaign_Name'] = self.Campaign_Name
         campaign_dict['StartDate'] = self.StartDate
         campaign_dict['EndDate'] = self.EndDate
         campaign_dict['idCompany'] = self.idCompany
