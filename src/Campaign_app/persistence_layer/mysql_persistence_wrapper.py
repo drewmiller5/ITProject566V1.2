@@ -108,6 +108,28 @@ class MySQLPersistenceWrapper(ApplicationBase):
 		except Exception as e:
 			self._logger.log_error(f'{inspect.currentframe().f_code.co_name}: {e}')
 	
+	def create_campaign(self, campaign:Campaign)->Campaign:
+		"""Create a new record in the campaign table"""
+		cursor = None
+		try:
+			connection = self._connection_pool.get_connection()
+			with connection:
+				cursor = connection.cursor()
+				with cursor:
+					cursor.execute(self.INSERT_CAMPAIGN, 
+						([campaign.Campaign_Name, campaign.StartDate, campaign.EndDate, 
+		campaign.idCompany, campaign.idCampaign_Category, campaign.Budget, campaign.Revenue]))
+					connection.commit()
+					self._logger.log_debug(f'Updated {cursor.rowcount} row.')
+					self._logger.log_debug(f'Last Row ID: {cursor.lastrowid}.')
+					campaign.idCampaign, = cursor.lastrowid
+
+			return campaign
+
+		except Exception as e:
+			self._logger.log_error(f'{inspect.currentframe().f_code.co_name}: {e}')
+
+	
 
 		##### Private Utility Methods #####
 
@@ -136,7 +158,7 @@ class MySQLPersistenceWrapper(ApplicationBase):
 		try:
 			for row in results:
 				campaign = Campaign()
-				campaign.id = row[self.CampaignColumns['idCampaign'].value]
+				campaign.idCampaign = row[self.CampaignColumns['idCampaign'].value]
 				campaign.Campaign_Name = row[self.CampaignColumns['Campaign_Name'].value]
 				campaign.StartDate = row[self.CampaignColumns['StartDate'].value]
 				campaign.EndDate = row[self.CampaignColumns['EndDate'].value]
@@ -163,5 +185,6 @@ class MySQLPersistenceWrapper(ApplicationBase):
 				channel_list.append(channel)
 			
 			return channel_list
+		
 		except Exception as e:
 			self._logger.log_error(f'{inspect.currentframe().f_code.co_name}: {e}')

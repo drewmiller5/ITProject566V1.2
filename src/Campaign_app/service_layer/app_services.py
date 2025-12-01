@@ -5,7 +5,7 @@ from campaign_app.persistence_layer.mysql_persistence_wrapper import MySQLPersis
 from campaign_app.infrastructure_layer.campaign import Campaign
 from campaign_app.infrastructure_layer.channel import Channel
 import inspect
-from typing import List
+from typing import List, Dict
 
 class AppServices(ApplicationBase):
     """AppServices Class Definition."""
@@ -13,8 +13,8 @@ class AppServices(ApplicationBase):
         """Initializes object. """
         self._config_dict = config
         self.META = config["meta"]
-        super().__init__(subclass_name=self.__class__.__name__, 
-				   logfile_prefix_name=self.META["log_prefix"])
+        super().__init__(subclass_name=self.__class__.__name__,
+                         logfile_prefix_name=self.META["log_prefix"])
         self.DB = MySQLPersistenceWrapper(config)
         
 

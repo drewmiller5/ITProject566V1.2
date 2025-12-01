@@ -55,16 +55,16 @@ class ConsoleUI(ApplicationBase):
     def list_campaigns(self)->None:
         """Lists campaigns"""
         campaigns = self.app_services.get_all_campaigns()
-        campaign_table = PrettyTable(theme = Themes.EARTH)
+        campaign_table = ColorTable(theme = Themes.EARTH)
         campaign_table.field_names =['id','Campaign Name','Start Date','End Date',
                                      'Company','Campaign Category','Budget','Revenue', 'Net Profit']
-        channel_table = PrettyTable(theme = Themes.EARTH)
+        channel_table = ColorTable(theme = Themes.EARTH)
         channel_table.field_names = ['Channel Name']
         channel_table.align = 'l'
         for campaign in campaigns:
             for channel in campaign.channel:
                 channel_table.add_row([channel.ChannelName])
-                
+            
             campaign_table.add_row([campaign.idCampaign, campaign.Campaign_Name,
                                     campaign.StartDate, campaign.EndDate,
                                     campaign.idCompany, campaign.idCampaign_Category,
@@ -74,8 +74,9 @@ class ConsoleUI(ApplicationBase):
             channel_table.clear_rows()
         print(campaign_table)
 
-        self._logger.log_debug(f'{inspect.currentframe().f_code.co_name}:' \
-                               f'{campaigns}')
+        self._logger.log_debug(f'{inspect.currentframe().f_code.co_name}: ' \
+                                f'{campaigns}')
+
 
 
     def list_channel(self)->None:
