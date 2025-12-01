@@ -1,0 +1,13 @@
+DEBUG:MySQLPersistenceWrapper:2025-12-01 09:42:54,287:__init__: DB Connection Config Dict: {'database': 'Campaign_Channel', 'user': 'Campaign_Channel_user', 'host': 'localhost', 'port': 3306}
+DEBUG:MySQLPersistenceWrapper:2025-12-01 09:42:54,287:Creating connection pool...
+ERROR:MySQLPersistenceWrapper:2025-12-01 09:42:54,287:_initialize_database_connection_pool:Problem creating connection pool: 'use_pure'
+ERROR:MySQLPersistenceWrapper:2025-12-01 09:42:54,287:_initialize_database_connection_pool:Check DB conf:
+{"pool": {"name": "Campaign_Channel_app_db_bool", "size": 10, "reset_session": true}, "connection": {"config": {"database": "Campaign_Channel", "user": "Campaign_Channel_user", "host": "localhost", "port": 3306}}}
+DEBUG:AppServices:2025-12-01 09:42:58,753:In get_all_campaigns()...
+DEBUG:MySQLPersistenceWrapper:2025-12-01 09:42:58,753:Entering campaigns
+ERROR:MySQLPersistenceWrapper:2025-12-01 09:42:58,753:Problem with select_all_campaigns(): 'NoneType' object has no attribute 'get_connection'
+DEBUG:MySQLPersistenceWrapper:2025-12-01 09:43:03,207:__init__: DB Connection Config Dict: {'database': 'Campaign_Channel', 'user': 'Campaign_Channel_user', 'host': 'localhost', 'port': 3306}
+DEBUG:MySQLPersistenceWrapper:2025-12-01 09:43:03,207:Creating connection pool...
+ERROR:MySQLPersistenceWrapper:2025-12-01 09:43:03,207:_initialize_database_connection_pool:Problem creating connection pool: 'use_pure'
+ERROR:MySQLPersistenceWrapper:2025-12-01 09:43:03,208:_initialize_database_connection_pool:Check DB conf:
+{"pool": {"name": "Campaign_Channel_app_db_bool", "size": 10, "reset_session": true}, "connection": {"config": {"database": "Campaign_Channel", "user": "Campaign_Channel_user", "host": "localhost", "port": 3306}}}

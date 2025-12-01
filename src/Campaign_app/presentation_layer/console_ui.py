@@ -45,7 +45,7 @@ class ConsoleUI(ApplicationBase):
 
         match menu_choice[0]:
             case '1': self.list_campaigns()
-            case '2': self.list_channel()
+            case '2': self.list_channels()
             case '3': self.add_campaign()
             case '4': self.record_campaign()
             case '5': self.add_channel()
@@ -55,10 +55,10 @@ class ConsoleUI(ApplicationBase):
     def list_campaigns(self)->None:
         """Lists campaigns"""
         campaigns = self.app_services.get_all_campaigns()
-        campaign_table = ColorTable(theme = Themes.EARTH)
+        campaign_table = ColorTable(theme=Themes.EARTH)
         campaign_table.field_names =['id','Campaign Name','Start Date','End Date',
-                                     'Company','Campaign Category','Budget','Revenue', 'Net Profit']
-        channel_table = ColorTable(theme = Themes.EARTH)
+                                     'Company','Campaign Category','Budget','Revenue', 'Net Profit', 'Channel Name']
+        channel_table = ColorTable(theme=Themes.EARTH)
         channel_table.field_names = ['Channel Name']
         channel_table.align = 'l'
         for campaign in campaigns:
@@ -70,6 +70,7 @@ class ConsoleUI(ApplicationBase):
                                     campaign.idCompany, campaign.idCampaign_Category,
                                     campaign.Budget, campaign.Revenue, campaign.NetProfit,
                                     channel_table.get_string()])
+            # Want to have by the end 
             campaign_table.add_divider()
             channel_table.clear_rows()
         print(campaign_table)
@@ -79,7 +80,7 @@ class ConsoleUI(ApplicationBase):
 
 
 
-    def list_channel(self)->None:
+    def list_channels(self)->None:
         """Lists channel"""
         print("list_channel() method stub called....")
     

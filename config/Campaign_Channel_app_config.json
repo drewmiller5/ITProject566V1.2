@@ -8,7 +8,8 @@
 		"pool":{
 			"name": "Campaign_Channel_app_db_bool",
 			"size": 10,
-			"reset_session": true
+			"reset_session": true,
+			"use_pure": false
 		},
 		"connection":{
 			"config":{

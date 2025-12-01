@@ -69,6 +69,7 @@ class MySQLPersistenceWrapper(ApplicationBase):
 		results = None
 		campaign_list = []
 		try:
+			self._logger.log_debug("Entering campaigns")
 			connection = self._connection_pool.get_connection()
 			with connection:
 				cursor = connection.cursor()
@@ -84,6 +85,7 @@ class MySQLPersistenceWrapper(ApplicationBase):
 						   {campaign_list}')
 				campaign.channel = self._populate_channel_objects(channel_list)
 			
+			self._logger.log_debug("Returns campaign list")
 			return campaign_list
 		
 		except Exception as e:
