@@ -4,9 +4,9 @@ from campaign_app.infrastructure_layer.channel_category import Channel_Category
 class Channel():
 
     def __init__(self) ->None:
-        self.idChannel:str = ""
+        self.idChannel:int = 0
         self.ChannelName:str = ""
-        self.idChannel_Category:str = ""
+        self.idChannel_Category:int = 0
     
     def __str__(self) ->str:
         return self.to_json()

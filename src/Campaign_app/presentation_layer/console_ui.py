@@ -3,7 +3,12 @@
 from campaign_app.application_base import ApplicationBase
 from campaign_app.service_layer.app_services import AppServices
 from campaign_app.infrastructure_layer.campaign import Campaign
+from campaign_app.infrastructure_layer.campaign_category import Campaign_Category
+from campaign_app.infrastructure_layer.channel import Channel
+from campaign_app.infrastructure_layer.channel_category import Channel_Category
+from campaign_app.infrastructure_layer.company import Company
 from prettytable import PrettyTable
+from prettytable.colortable import ColorTable, Themes
 from datetime import datetime
 import sys
 import inspect
@@ -50,11 +55,11 @@ class ConsoleUI(ApplicationBase):
     def list_campaigns(self)->None:
         """Lists campaigns"""
         campaigns = self.app_services.get_all_campaigns()
-        campaign_table = PrettyTable()
+        campaign_table = PrettyTable(theme = Themes.EARTH)
         campaign_table.field_names =['id','Campaign Name','Start Date','End Date',
-                                     'Company','Campaign Category','Budget','Revenue',]
-        channel_table = PrettyTable()
-        channel_table.field_names = ['Channel_Name']
+                                     'Company','Campaign Category','Budget','Revenue', 'Net Profit']
+        channel_table = PrettyTable(theme = Themes.EARTH)
+        channel_table.field_names = ['Channel Name']
         channel_table.align = 'l'
         for campaign in campaigns:
             for channel in campaign.channel:

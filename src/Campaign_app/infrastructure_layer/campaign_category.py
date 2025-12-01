@@ -2,7 +2,7 @@ import json
 
 class Campaign_Category():
     def __init__(self) ->None:
-        self.idCampaign_Category:str = ""
+        self.idCampaign_Category:int = 0
         self.Campaign_CategoryName:str = ""
         
     

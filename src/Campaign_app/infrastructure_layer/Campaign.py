@@ -12,8 +12,8 @@ class Campaign():
         self.Campaign_Name:str = ""
         self.StartDate:str = ""
         self.EndDate:str = ""
-        self.idCompany:str = ""
-        self.idCampaign_Category:str = ""
+        self.idCompany:int = 0
+        self.idCampaign_Category:int = 0
         self.Budget:str = ""
         self.Revenue:str = ""
         self.NetProfit:str = ""

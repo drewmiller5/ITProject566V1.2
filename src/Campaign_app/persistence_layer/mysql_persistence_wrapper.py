@@ -6,8 +6,11 @@ from mysql.connector.pooling import (MySQLConnectionPool)
 import json
 import inspect
 from typing import List
+from campaign_app.infrastructure_layer.campaign_category import Campaign_Category
 from campaign_app.infrastructure_layer.campaign import Campaign
+from campaign_app.infrastructure_layer.channel_category import Channel_Category
 from campaign_app.infrastructure_layer.channel import Channel
+from campaign_app.infrastructure_layer.company import Company
 from enum import Enum
 
 class MySQLPersistenceWrapper(ApplicationBase):
@@ -20,7 +23,7 @@ class MySQLPersistenceWrapper(ApplicationBase):
 		self.DATABASE = config["database"]
 		super().__init__(subclass_name=self.__class__.__name__, 
 				   logfile_prefix_name=self.META["log_prefix"])
-		self._logger.log_debug(f'{inspect.currentframe().f_code.co_name}:It works!')
+		
 
 		# Database Configuration Constants
 		self.DB_CONFIG = {}
@@ -49,19 +52,22 @@ class MySQLPersistenceWrapper(ApplicationBase):
 			f"SELECT idCampaign, Campaign_Name, StartDate, EndDate, idCompany, idCampaign_Category, Budget, Revenue, NetProfit " \
 			f"FROM Campaign"
 		
-		self.SELECT_ALL_CHHANEL_FOR_CAMPAIGN_ID = \
-			f"SELECT idChannel, ChannelName, idChannel_Cateogry " \
-			f"FROM Channel"
+		self.SELECT_CHANNELS_FOR_CAMPAIGN_ID = \
+			f"SELECT c.idChannel, c.ChannelName, c.idChannel_Category " \
+			f"FROM Channel c, Campaign_channel_xref cx " \
+			f"WHERE (cx.idCampaign = %s) AND (c.idChannel = cx.idChannel)"
+		
+		self.INSERT_CAMPAIGN = \
+		f"INSERT INTO Campaign " \
+		f"(idCampaign, Campaign_Name, StartDate, EndDate, idCompany, idCampaign_Category, Budget, Revenue) " \
+		f"VALUES(%s, %s, %s, %s, %s, %s, %s)"
 
 
-
-
-
-	# MySQLPersistenceWrapper Methods
 	def select_all_campaigns(self)->List[Campaign]:
 		"Returns a list of all campaigns"
 		cursor = None
 		results = None
+		campaign_list = []
 		try:
 			connection = self._connection_pool.get_connection()
 			with connection:
@@ -70,21 +76,22 @@ class MySQLPersistenceWrapper(ApplicationBase):
 					cursor.execute(self.SELECT_ALL_CAMPAIGNS)
 					results = cursor.fetchall()
 					campaign_list = self._populate_campaign_objects(results)
+
 			for campaign in campaign_list:
 				channel_list = \
-					self.select_all_Channels_for_Campaign_id(Campaign.idCampaign)
+					self.select_all_channels_for_campaign_id(campaign.idCampaign)
 				self._logger.log_debug(f'{inspect.currentframe().f_code.co_name}: \
 						   {campaign_list}')
-				campaign.training = self._populate_channel_objects(channel_list)
+				campaign.channel = self._populate_channel_objects(channel_list)
 			
 			return campaign_list
 		
 		except Exception as e:
 			self._logger.log_error(f'Problem with select_all_campaigns(): {e}')
 
-	def select_all_Channels_for_Campaign_id(self, idCampaign:int) \
+	def select_all_channels_for_campaign_id(self, idCampaign:int) \
 		->List[Channel]:
-		"""Returns a list of all chanels for campaing id."""
+		"""Returns a list of all chanels for campaingn id."""
 		cursor = None
 		results = None
 		try:
@@ -92,15 +99,15 @@ class MySQLPersistenceWrapper(ApplicationBase):
 			with connection:
 				cursor = connection.cursor()
 				with cursor:
-					cursor.execute(self.SELECT_CHANNEL_FOR_CAMPAIGN_ID,
+					cursor.execute(self.SELECT_CHANNELS_FOR_CAMPAIGN_ID,
 					([idCampaign]))
 					results = cursor.fetchall()
-				return results
+			
+			return results
+		
 		except Exception as e:
 			self._logger.log_error(f'{inspect.currentframe().f_code.co_name}: {e}')
-
-
-
+	
 
 		##### Private Utility Methods #####
 

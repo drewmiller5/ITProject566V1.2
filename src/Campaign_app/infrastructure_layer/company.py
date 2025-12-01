@@ -2,7 +2,7 @@ import json
 
 class Company():
     def __init__(self) ->None:
-        self.idCompany:str = ""
+        self.idCompany:int = 0
         self.CompanyName:str = ""
         
     

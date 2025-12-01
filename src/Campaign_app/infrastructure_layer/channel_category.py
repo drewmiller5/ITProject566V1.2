@@ -2,7 +2,7 @@ import json
 
 class Channel_Category():
     def __init__(self) ->None:
-        self.idChannel_Category:str = ""
+        self.idChannel_Category:int = 0
         self.Channel_CategoryName:str = ""
         
     
