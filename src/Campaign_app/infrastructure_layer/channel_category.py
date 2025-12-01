@@ -13,7 +13,7 @@ class Channel_Category():
         return self.to_json()
     
     def to_json(self)->str:
-        channel_dict = {}
-        channel_dict['idChannel_Category'] = self.idChannel_Category
-        channel_dict['Channel_CategoryName'] = self.Channel_CategoryName
-        return json.dumps(channel_dict)
+        channel_category_dict = {}
+        channel_category_dict['idChannel_Category'] = self.idChannel_Category
+        channel_category_dict['Channel_CategoryName'] = self.Channel_CategoryName
+        return json.dumps(channel_category_dict)

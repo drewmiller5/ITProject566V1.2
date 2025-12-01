@@ -59,6 +59,7 @@ class ConsoleUI(ApplicationBase):
         for campaign in campaigns:
             for channel in campaign.channel:
                 channel_table.add_row([channel.ChannelName])
+                
             campaign_table.add_row([campaign.idCampaign, campaign.Campaign_Name,
                                     campaign.StartDate, campaign.EndDate,
                                     campaign.idCompany, campaign.idCampaign_Category,

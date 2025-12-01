@@ -3,8 +3,8 @@
 from campaign_app.application_base import ApplicationBase
 from mysql import connector
 from mysql.connector.pooling import (MySQLConnectionPool)
-import inspect
 import json
+import inspect
 from typing import List
 from campaign_app.infrastructure_layer.campaign import Campaign
 from campaign_app.infrastructure_layer.channel import Channel
@@ -24,8 +24,7 @@ class MySQLPersistenceWrapper(ApplicationBase):
 
 		# Database Configuration Constants
 		self.DB_CONFIG = {}
-		self.DB_CONFIG['database'] = \
-			self.DATABASE["connection"]["config"]["database"]
+		self.DB_CONFIG['database'] = self.DATABASE["connection"]["config"]["database"]
 		self.DB_CONFIG['user'] = self.DATABASE["connection"]["config"]["user"]
 		self.DB_CONFIG['host'] = self.DATABASE["connection"]["config"]["host"]
 		self.DB_CONFIG['port'] = self.DATABASE["connection"]["config"]["port"]
@@ -33,22 +32,27 @@ class MySQLPersistenceWrapper(ApplicationBase):
 		self._logger.log_debug(f'{inspect.currentframe().f_code.co_name}: DB Connection Config Dict: {self.DB_CONFIG}')
 
 		# Database Connection
-		self._connection_pool = \
-			self._initialize_database_connection_pool(self.DB_CONFIG)
+		self._connection_pool = self._initialize_database_connection_pool(self.DB_CONFIG)
 		
 		# Campaign Columns ENUMS
-		self.CampaignColumns = \
-			Enum('CampaignColumns',[('idCampaign',0),('Campaign_Name', 1),('StartDate', 2),('EndDate', 3),
-						   ('idCompany', 4),('idCampaign_Category', 5),('Budget', 6),('Revenue', 7),('NetProfit', 8)])
+		self.CampaignColumns = Enum('CampaignColumns', [('idCampaign',0),('Campaign_Name', 1),
+												  ('StartDate', 2),('EndDate', 3),('idCompany', 4),
+												  ('idCampaign_Category', 5),('Budget', 6),('Revenue', 7),
+												  ('NetProfit', 8)])
 		
 		# Channel Columns ENUMS
-		self.ChannelColumns = \
-			Enum('ChannelColumns',[('idChannel', 0),('ChannelName', 1),('idChannel_Category', 2)])
+		self.ChannelColumns = Enum('ChannelColumns',
+							 [('idChannel', 0),('ChannelName', 1),('idChannel_Category', 2)])
 
 		# SQL Query Constants
 		self.SELECT_ALL_CAMPAIGNS = \
 			f"SELECT idCampaign, Campaign_Name, StartDate, EndDate, idCompany, idCampaign_Category, Budget, Revenue, NetProfit " \
 			f"FROM Campaign"
+		
+		self.SELECT_ALL_CHHANEL_FOR_CAMPAIGN_ID = \
+			f"SELECT idChannel, ChannelName, idChannel_Cateogry " \
+			f"FROM Channel"
+
 
 
 

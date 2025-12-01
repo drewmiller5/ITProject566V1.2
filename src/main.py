@@ -14,13 +14,10 @@ def main():
 		config = None
 		with open(args.configfile, 'r') as f:
 			config = json.loads(f.read())
-	
-	
+			
 		ui = ConsoleUI(config)
 		ui.start()
 			
-		
-
 
 def configure_and_parse_commandline_arguments():
 	"""Configure and parse command-line arguments."""
@@ -34,7 +31,6 @@ def configure_and_parse_commandline_arguments():
 					required=True)
 	args = parser.parse_args()
 	return args
-
 
 
 if __name__ == "__main__":
