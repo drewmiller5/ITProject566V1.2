@@ -38,7 +38,8 @@ INSERT INTO Channel_Category (Channel_CategoryName) VALUES
 ('Print'),
 ('Outdoor'),
 ('Event'),
-('User-Generated');
+('User-Generated'),
+('Word of Mouth');
 
 /* ============================================
    INSERT CHANNELS
@@ -66,7 +67,9 @@ INSERT INTO Channel (ChannelName, idChannel_Category) VALUES
 ('Prime Day Event', 6),
 
 ('User Submission', 7),
-('Influencer Content', 7);
+('Influencer Content', 7),
+
+('Word of Mouth', 8);
 
 /* ============================================
    INSERT ALL 13 CAMPAIGNS
@@ -120,7 +123,7 @@ VALUES
 
 INSERT INTO Campaign_channel_xref (idChannel, idCampaign) VALUES
 -- 1 Lamborghini
-(11,1), (12,1),
+(18,1),
 
 -- 2 Nike Find Your Greatness
 (9,2), (2,2), (4,2),

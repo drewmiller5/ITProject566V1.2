@@ -1,5 +1,6 @@
 import json
 from campaign_app.infrastructure_layer.channel_category import Channel_Category
+from typing import List
 
 class Channel():
 
@@ -7,6 +8,7 @@ class Channel():
         self.idChannel:int = 0
         self.ChannelName:str = ""
         self.idChannel_Category:int = 0
+        self.ChannelName: List[Channel_Category] = []
     
     def __str__(self) ->str:
         return self.to_json()
@@ -18,5 +20,11 @@ class Channel():
         channel_dict = {}
         channel_dict['idChannel'] = self.idChannel
         channel_dict['ChannelName'] = self.ChannelName
-        channel_dict['idChannel_Category'] = self.idChannel_Category
+        channel_dict['idChannel_Category'] = self.ChannelName
+        channel_dict['ChannelName'] = []
+        
+
+        for item in self.ChannelName:
+            channel_dict['channelName'].append(item.__dict__)
+
         return json.dumps(channel_dict)
