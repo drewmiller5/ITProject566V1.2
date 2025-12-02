@@ -152,10 +152,10 @@ class MySQLPersistenceWrapper(ApplicationBase):
 					channel_list = self._populate_channel_objects(results)
 				for channel in channel_list:
 					category_list = \
-						self.select_all_categories_for_channel_id(channel.idChannel_Category) # Foreign Key connector
+						self.select_all_categories_for_channel_id(channel.idChannel) # Foreign Key connector
 					self._logger.log_debug(f'{inspect.currentframe().f_code.co_name}: \
 								{category_list}')
-					channel.CategoryName = self._populate_channel_objects(category_list)
+					channel.CategoryName = self._populate_channel_category_objects(category_list)
 			
 			self._logger.log_debug("Returns channel list")
 			return channel_list
@@ -275,6 +275,7 @@ class MySQLPersistenceWrapper(ApplicationBase):
 				channel.idChannel = row[0]
 				channel.ChannelName = row[1]
 				channel.idChannel_Category = row[2]
+				channel.CategoryName = []
 				channel_list.append(channel)
 			
 			return channel_list
@@ -288,8 +289,8 @@ class MySQLPersistenceWrapper(ApplicationBase):
 		try:
 			for row in results:
 				channel_category = Channel_Category()
-				channel_category.idChannel_Category = row[self.ChannelCategoryColumns['idChannel_Category'].value]
-				channel_category.Channel_CategoryName = row[self.ChannelCategoryColumns['Channel_CategoryName'].value]
+				channel_category.idChannel_Category = row[2]
+				channel_category.Channel_CategoryName = row[3]
 				channel_category_list.append(channel_category)
 			
 			return channel_category_list

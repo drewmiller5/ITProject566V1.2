@@ -90,7 +90,7 @@ class ConsoleUI(ApplicationBase):
         category_table.align = 'l'
         for channel in channels:
             for channel_category in channel.CategoryName:
-                category_table.add_row([channel_category.idChannel_Category])
+                category_table.add_row([channel_category.Channel_CategoryName])
             
             channel_table.add_row([channel.idChannel, channel.ChannelName,
                                    channel.idChannel_Category, 
