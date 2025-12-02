@@ -84,13 +84,23 @@ class ConsoleUI(ApplicationBase):
         
         channels = self.app_services.get_all_channels()
         channel_table = ColorTable(theme=Themes.EARTH)
-        channel_table.field_names =['id','Channel Name','idChannel_Category', 'ChannelName']
+        channel_table.field_names =['id','Channel Name','idChannel_Category', 'Category Name']
+        category_table = ColorTable(theme=Themes.EARTH)
+        category_table.field_names = ['Category Name']
+        category_table.align = 'l'
         for channel in channels:
-            channel_table.add_row([channel.idChannel, channel.ChannelName,channel.idChannel_Category,channel_table.get_string()])
+            for channel_category in channel.CategoryName:
+                category_table.add_row([channel_category.idChannel_Category])
+            
+            channel_table.add_row([channel.idChannel, channel.ChannelName,
+                                   channel.idChannel_Category, 
+                                   category_table.get_string()])
+            channel_table.add_divider()
+            category_table.clear_rows()
         print(channel_table)
 
         self._logger.log_debug(f'{inspect.currentframe().f_code.co_name}: ' \
-                                f'{channel}')
+                                f'{channels}')
     
 
     def add_campaign(self)->None:

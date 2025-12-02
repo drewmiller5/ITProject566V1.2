@@ -61,7 +61,8 @@ class MySQLPersistenceWrapper(ApplicationBase):
 
 		# SQL Query Constants Lists Campaigns
 		self.SELECT_ALL_CAMPAIGNS = \
-			f"SELECT idCampaign, Campaign_Name, StartDate, EndDate, idCompany, idCampaign_Category, Budget, Revenue, NetProfit " \
+			f"SELECT idCampaign, Campaign_Name, StartDate, EndDate, idCompany, " \
+			f"idCampaign_Category, Budget, Revenue, NetProfit " \
 			f"FROM Campaign"
 		
 		self.SELECT_CHANNELS_FOR_CAMPAIGN_ID = \
@@ -71,13 +72,14 @@ class MySQLPersistenceWrapper(ApplicationBase):
 		
 		# SQL Query Constants Lists Channels
 		self.SELECT_ALL_CHANNELS = \
-			f"SELECT idChannel, ChannelName " \
+			f"SELECT idChannel, ChannelName, idChannel_Category " \
 			f"FROM Channel"
 		
 		self.SELECT_CAMPAIGN_CATEGORY_FOR_CHANNEL_ID = \
-			f"SELECT c.idChannel, c.ChannelName, cc.Channel_CategoryName " \
+			f"SELECT c.idChannel, c.ChannelName, c.idChannel_Category, cc.Channel_CategoryName " \
 			f"FROM Channel c  " \
-			f"JOIN Channel_Category cc on c.idChannel_Category = cc.idChannel_Category"
+			f"JOIN Channel_Category cc on c.idChannel_Category = cc.idChannel_Category " \
+			f"WHERE c.idChannel = %s"
 		
 		self.INSERT_CAMPAIGN = \
 		f"INSERT INTO Campaign " \
@@ -146,19 +148,20 @@ class MySQLPersistenceWrapper(ApplicationBase):
 				with cursor:
 					cursor.execute(self.SELECT_ALL_CHANNELS)
 					results = cursor.fetchall()
-					channel_list = self._populate_campaign_objects(results)
-			for channel in channel_list:
-				category_list = \
-				self.select_all_channe()
-				self._logger.log_debug(f'{inspect.currentframe().f_code.co_name}: \
-						   {campaign_list}')
-				campaign.channel = self._populate_channel_objects(channel_list)
+					self._logger.log_debug(f"Channel {results}")
+					channel_list = self._populate_channel_objects(results)
+				for channel in channel_list:
+					category_list = \
+						self.select_all_categories_for_channel_id(channel.idChannel_Category) # Foreign Key connector
+					self._logger.log_debug(f'{inspect.currentframe().f_code.co_name}: \
+								{category_list}')
+					channel.CategoryName = self._populate_channel_objects(category_list)
 			
-			self._logger.log_debug("Returns campaign list")
-			return campaign_list
+			self._logger.log_debug("Returns channel list")
+			return channel_list
 		
 		except Exception as e:
-			self._logger.log_error(f'Problem with select_all_campaigns(): {e}')
+			self._logger.log_error(f'Problem with select_all_channels(): {e}')
 		
 	
 	def select_all_categories_for_channel_id(self, idChannel_Category:int) \
@@ -266,9 +269,12 @@ class MySQLPersistenceWrapper(ApplicationBase):
 		try:
 			for row in results:
 				channel = Channel()
-				channel.idChannel = row[self.ChannelColumns['idChannel'].value]
-				channel.ChannelName = row[self.ChannelColumns['ChannelName'].value]
-				channel.idChannel_Category = row[self.ChannelColumns['idChannel_Category'].value]
+				#channel.idChannel = row[self.ChannelColumns['idChannel'].value]
+				#channel.ChannelName = row[self.ChannelColumns['ChannelName'].value]
+				#channel.idChannel_Category = row[self.ChannelColumns['idChannel_Category'].value]
+				channel.idChannel = row[0]
+				channel.ChannelName = row[1]
+				channel.idChannel_Category = row[2]
 				channel_list.append(channel)
 			
 			return channel_list

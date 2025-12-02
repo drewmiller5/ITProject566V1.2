@@ -31,6 +31,17 @@ class AppServices(ApplicationBase):
         except Exception as e:
             self._logger.log_error(f'{inspect.currentframe().f_code.co_name}:{e}')
 
+    def get_all_channels(self) ->List[Channel]:
+        self._logger.log_debug(f'In {inspect.currentframe().f_code.co_name}()...')
+        channel_dict = {}
+        channel_dict['channel'] =[]
+        try:
+            results = self.DB.select_all_channels()
+            return results
+        
+        except Exception as e:
+            self._logger.log_error(f'{inspect.currentframe().f_code.co_name}:{e}')
+    
     def create_campaign(self, campaign:Campaign)->Campaign:
         """Creates a  new campaign in the database"""
         self._logger.log_debug(f'In {inspect.currentframe().f_code.co_name}()...')
@@ -40,17 +51,6 @@ class AppServices(ApplicationBase):
         except Exception as e:
             self._logger.log_error(f'{inspect.currentframe().f_code.co_name}:{e}')
 
-    def get_all_channels(self) ->List[Channel]:
-        self._logger.log_debug(f'In {inspect.currentframe().f_code.co_name}()...')
-        channel_dict = {}
-        channel_dict['channel'] =[]
-
-        try:
-            results = self.DB.select_all_channels()
-            return results
-        
-        except Exception as e:
-            self._logger.log_error(f'{inspect.currentframe().f_code.co_name}:{e}')
 
     def create_channel(self, channel:Channel)->Channel:
         """Creates a  new channel in the database"""
