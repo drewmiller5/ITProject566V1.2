@@ -63,7 +63,7 @@ class ConsoleUI(ApplicationBase):
         campaigns = self.app_services.get_all_campaigns()
         campaign_table = ColorTable(theme=Themes.EARTH)
         campaign_table.field_names =['id','Campaign Name','Start Date','End Date',
-                                     'Company','Campaign Category','Budget','Revenue', 'Net Profit', 'Channel Name']
+                                     'Company','Campaign Category','Budget','Revenue', 'Net Profit', 'Channels']
         channel_table = ColorTable(theme=Themes.EARTH)
         channel_table.field_names = ['Channel Name']
         channel_table.align = 'l'
@@ -89,7 +89,7 @@ class ConsoleUI(ApplicationBase):
         
         channels = self.app_services.get_all_channels()
         channel_table = ColorTable(theme=Themes.EARTH)
-        channel_table.field_names =['id','Channel Name','idChannel_Category', 'Category Name']
+        channel_table.field_names =['id','Channel Name','idChannel_Category', 'Category']
         category_table = ColorTable(theme=Themes.EARTH)
         category_table.field_names = ['Category Name']
         category_table.align = 'l'

@@ -296,7 +296,7 @@ INSERT INTO Campaign_channel_xref (idChannel, idCampaign) VALUES
 (10,5), (13,5),
 
 -- 6 Red Bull Racing F1
-(2,6), (4,6), (15,6),
+(2,6), (4,6), (7,6), (8,6),
 
 -- 7 ALS Ice Bucket
 (16,7), (4,7), (5,7),
