@@ -58,14 +58,26 @@ class AppServices(ApplicationBase):
     
     def get_all_campaign_category(self) ->List[Campaign_Category]:
         self._logger.log_debug(f'In {inspect.currentframe().f_code.co_name}()...')
-        channel_category_dict = {}
-        channel_category_dict['campaign_cat'] =[]
+        campaign_category_dict = {}
+        campaign_category_dict['campaign_cat'] =[]
         try:
             results = self.DB.select_all_campaign_categories()
             return results
         
         except Exception as e:
             self._logger.log_error(f'{inspect.currentframe().f_code.co_name}:{e}')
+    
+    def get_all_companies(self) ->List[Company]:
+        self._logger.log_debug(f'In {inspect.currentframe().f_code.co_name}()...')
+        company_dict = {}
+        company_dict['company'] =[]
+        try:
+            results = self.DB.select_all_companies() 
+            return results
+        
+        except Exception as e:
+            self._logger.log_error(f'{inspect.currentframe().f_code.co_name}:{e}')
+
     def create_campaign(self, campaign:Campaign)->Campaign:
         """Creates a  new campaign in the database"""
         self._logger.log_debug(f'In {inspect.currentframe().f_code.co_name}()...')

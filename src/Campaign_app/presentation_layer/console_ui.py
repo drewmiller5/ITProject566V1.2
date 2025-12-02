@@ -34,10 +34,11 @@ class ConsoleUI(ApplicationBase):
         print(f"\t2. List Channels")
         print(f"\t3. List Channel Categories")
         print(f"\t4. List Campaign Categories")
-        print(f"\t5. Add Campaign")
-        print(f"\t6. Record Campaign")
-        print(f"\t7. Add Channel")
-        print(f"\t8. Exit")
+        print(f"\t5. List Companies")
+        print(f"\t6. Add Campaign")
+        print(f"\t7. Record Campaign")
+        print(f"\t8. Add Channel")
+        print(f"\t9. Exit")
         print()
     
 
@@ -50,10 +51,11 @@ class ConsoleUI(ApplicationBase):
             case '2': self.list_channels()
             case '3': self.list_channel_category()
             case '4': self.list_campaign_category()
-            case '5': self.add_campaign()
-            case '6': self.record_campaign()
-            case '7': self.add_channel()
-            case '8': sys.exit()
+            case '5': self.list_company()
+            case '6': self.add_campaign()
+            case '7': self.record_campaign()
+            case '8': self.add_channel()
+            case '9': sys.exit()
             case _: print(f"Invalid Menu Choice {menu_choice[0]}")
     
     def list_campaigns(self)->None:
@@ -131,6 +133,20 @@ class ConsoleUI(ApplicationBase):
         print(campaign_category_table)
         
         self._logger.log_debug(f'{inspect.currentframe().f_code.co_name}: {campaign_category_table}')
+
+    def list_company(self)->None:
+        """list companies"""
+
+        companies = self.app_services.get_all_companies()
+        company_table = ColorTable(theme=Themes.EARTH)
+        company_table.field_names = ['CompanyId', 'Company Name']
+        company_table.align = 'l'
+        for company in companies:
+            company_table.add_row([company.idCompany,company.CompanyName])
+        print(company_table)
+        
+        self._logger.log_debug(f'{inspect.currentframe().f_code.co_name}: {company_table}')
+        
 
     def add_campaign(self)->None:
         """add campaign"""

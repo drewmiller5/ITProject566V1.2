@@ -94,6 +94,12 @@ class MySQLPersistenceWrapper(ApplicationBase):
 		f"SELECT idCampaign_Category, Campaign_CategoryName " \
 		f"FROM campaign_category " \
 		f"ORDER BY idCampaign_Category" # Pattern from line 90
+
+		# List all Companies
+		self.SELECT_ALL_COMPANY = \
+		f"SELECT idCompany, CompanyName " \
+		f"FROM company " \
+		f"ORDER BY idCompany" # Same problem as line 90
 		
 
 		self.INSERT_CAMPAIGN = \
@@ -232,9 +238,29 @@ class MySQLPersistenceWrapper(ApplicationBase):
 				with cursor:
 					cursor.execute(self.SELECT_ALL_CAMPAIGN_CATEGORY)
 					results = cursor.fetchall()
-					self._logger.log_debug(f"Channel {results}")
+					self._logger.log_debug(f"Campaign {results}")
 					campaign_category_list = self._populate_campaign_category_objects(results)
 			return campaign_category_list
+		except Exception as e:
+			self._logger.log_error(f'{inspect.currentframe().f_code.co_name}: {e}')
+		
+	# Select all companies
+	def select_all_companies(self)->List[Company]:
+		"Returns a list of all channels"
+		cursor = None
+		results = None
+		company_list = []
+		try:
+			self._logger.log_debug("Entering channel categories")
+			connection = self._connection_pool.get_connection()
+			with connection:
+				cursor = connection.cursor(dictionary = True)
+				with cursor:
+					cursor.execute(self.SELECT_ALL_COMPANY)
+					results = cursor.fetchall()
+					self._logger.log_debug(f"Company {results}")
+					company_list = self._populate_company_objects(results)
+			return company_list
 		except Exception as e:
 			self._logger.log_error(f'{inspect.currentframe().f_code.co_name}: {e}')
 
@@ -309,8 +335,8 @@ class MySQLPersistenceWrapper(ApplicationBase):
 		try:
 			for row in results:
 				company = Company()
-				company.idCompany = row[self.CompanyColumns['idCompany'].value]
-				company.CompanyName = row[self.CompanyColumns['CompanyName'].value]
+				company.idCompany = row['idCompany']
+				company.CompanyName = row['CompanyName']
 				company_list.append(company)
 			
 			return company_list
