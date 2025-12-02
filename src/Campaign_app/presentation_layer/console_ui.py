@@ -31,13 +31,13 @@ class ConsoleUI(ApplicationBase):
         print(f"\n\n\t\tCampaign Channel Application Menu")
         print()
         print(f"\t1. List Campaigns")
-        print(f"\t2. List Channels")
-        print(f"\t3. List Channel Categories")
-        print(f"\t4. List Campaign Categories")
-        print(f"\t5. List Companies")
-        print(f"\t6. Add Campaign")
-        print(f"\t7. Record Campaign")
-        print(f"\t8. Add Channel")
+        print(f"\t2. Add Campaign")
+        print(f"\t3. Update Campaign")
+        print(f"\t4. List Channel")
+        print(f"\t5. Add Channel")
+        print(f"\t6. List Campaign Category")
+        print(f"\t7. List Channel Category")
+        print(f"\t8. List Company")
         print(f"\t9. Exit")
         print()
     
@@ -48,13 +48,13 @@ class ConsoleUI(ApplicationBase):
 
         match menu_choice[0]:
             case '1': self.list_campaigns()
-            case '2': self.list_channels()
-            case '3': self.list_channel_category()
-            case '4': self.list_campaign_category()
-            case '5': self.list_company()
-            case '6': self.add_campaign()
-            case '7': self.record_campaign()
-            case '8': self.add_channel()
+            case '2': self.add_campaign() 
+            case '3': self.update_campaign()
+            case '4': self.list_channels()
+            case '5': self.add_channel()
+            case '6': self.list_campaign_category()
+            case '7': self.list_channel_category()
+            case '8': self.list_company()
             case '9': sys.exit()
             case _: print(f"Invalid Menu Choice {menu_choice[0]}")
     
@@ -152,7 +152,7 @@ class ConsoleUI(ApplicationBase):
         """add campaign"""
         print("add_campaign() method stub called....")
     
-    def record_campaign(self)->None:
+    def update_campaign(self)->None:
         """record campaign"""
         print("record_campaign() method stub called....")
     
