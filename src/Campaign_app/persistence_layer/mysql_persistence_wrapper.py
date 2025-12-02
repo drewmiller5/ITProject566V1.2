@@ -70,7 +70,8 @@ class MySQLPersistenceWrapper(ApplicationBase):
 			f"FROM Channel c, Campaign_channel_xref cx " \
 			f"WHERE (cx.idCampaign = %s) AND (c.idChannel = cx.idChannel)"
 		
-		# SQL Query Constants Lists Channels
+		# List all channels SQL
+		
 		self.SELECT_ALL_CHANNELS = \
 			f"SELECT idChannel, ChannelName, idChannel_Category " \
 			f"FROM Channel"
@@ -81,6 +82,20 @@ class MySQLPersistenceWrapper(ApplicationBase):
 			f"JOIN Channel_Category cc on c.idChannel_Category = cc.idChannel_Category " \
 			f"WHERE c.idChannel = %s"
 		
+		# List all Channel Category SQL
+		self.SELECT_ALL_CHANNEL_CATEGORY = \
+		f"SELECT idChannel_Category, Channel_CategoryName " \
+		f"FROM channel_category " \
+		f"ORDER by idChannel_Category" # ID Numbers wouldn't go in order correctly 
+									   # and this needed to be fixed and is a pattern
+
+		# List all Campaign Category SQL
+		self.SELECT_ALL_CAMPAIGN_CATEGORY = \
+		f"SELECT idCampaign_Category, Campaign_CategoryName " \
+		f"FROM campaign_category " \
+		f"ORDER BY idCampaign_Category" # Pattern from line 90
+		
+
 		self.INSERT_CAMPAIGN = \
 		f"INSERT INTO Campaign " \
 		f"(idCampaign, Campaign_Name, StartDate, EndDate, idCompany, idCampaign_Category, Budget, Revenue) " \
@@ -172,7 +187,7 @@ class MySQLPersistenceWrapper(ApplicationBase):
 		try:
 			connection = self._connection_pool.get_connection()
 			with connection:
-				cursor = connection.cursor()
+				cursor = connection.cursor(dictionary = True)
 				with cursor:
 					cursor.execute(self.SELECT_CAMPAIGN_CATEGORY_FOR_CHANNEL_ID,
 					([idChannel_Category]))
@@ -182,7 +197,47 @@ class MySQLPersistenceWrapper(ApplicationBase):
 		
 		except Exception as e:
 			self._logger.log_error(f'{inspect.currentframe().f_code.co_name}: {e}')
-	
+
+	# Select all Channel Categories
+	def select_all_channel_categories(self)->List[Channel_Category]:
+		"Returns a list of all channels"
+		cursor = None
+		results = None
+		channel_category_list = []
+		try:
+			self._logger.log_debug("Entering channel categories")
+			connection = self._connection_pool.get_connection()
+			with connection:
+				cursor = connection.cursor(dictionary = True)
+				with cursor:
+					cursor.execute(self.SELECT_ALL_CHANNEL_CATEGORY)
+					results = cursor.fetchall()
+					self._logger.log_debug(f"Channel {results}")
+					channel_category_list = self._populate_channel_category_objects(results)
+			return channel_category_list
+		except Exception as e:
+			self._logger.log_error(f'{inspect.currentframe().f_code.co_name}: {e}')
+
+	# Select all Campaign Categories 
+	def select_all_campaign_categories(self)->List[Campaign_Category]:
+		"Returns a list of all channels"
+		cursor = None
+		results = None
+		campaign_category_list = []
+		try:
+			self._logger.log_debug("Entering channel categories")
+			connection = self._connection_pool.get_connection()
+			with connection:
+				cursor = connection.cursor(dictionary = True)
+				with cursor:
+					cursor.execute(self.SELECT_ALL_CAMPAIGN_CATEGORY)
+					results = cursor.fetchall()
+					self._logger.log_debug(f"Channel {results}")
+					campaign_category_list = self._populate_campaign_category_objects(results)
+			return campaign_category_list
+		except Exception as e:
+			self._logger.log_error(f'{inspect.currentframe().f_code.co_name}: {e}')
+
 	def create_campaign(self, campaign:Campaign)->Campaign:
 		"""Create a new record in the campaign table"""
 		cursor = None
@@ -269,12 +324,9 @@ class MySQLPersistenceWrapper(ApplicationBase):
 		try:
 			for row in results:
 				channel = Channel()
-				#channel.idChannel = row[self.ChannelColumns['idChannel'].value]
-				#channel.ChannelName = row[self.ChannelColumns['ChannelName'].value]
-				#channel.idChannel_Category = row[self.ChannelColumns['idChannel_Category'].value]
-				channel.idChannel = row[0]
-				channel.ChannelName = row[1]
-				channel.idChannel_Category = row[2]
+				channel.idChannel = row[self.ChannelColumns['idChannel'].value]
+				channel.ChannelName = row[self.ChannelColumns['ChannelName'].value]
+				channel.idChannel_Category = row[self.ChannelColumns['idChannel_Category'].value]
 				channel.CategoryName = []
 				channel_list.append(channel)
 			
@@ -283,14 +335,14 @@ class MySQLPersistenceWrapper(ApplicationBase):
 		except Exception as e:
 			self._logger.log_error(f'{inspect.currentframe().f_code.co_name}: {e}')
 
-	def _populate_channel_category_objects(self, results:List) ->List[Channel_Category]:
+	def _populate_channel_category_objects(self, results:List[dict]) ->List[Channel_Category]:
 		"""Populate and returns a list of channel objects"""
 		channel_category_list = []
 		try:
 			for row in results:
 				channel_category = Channel_Category()
-				channel_category.idChannel_Category = row[2]
-				channel_category.Channel_CategoryName = row[3]
+				channel_category.idChannel_Category = row['idChannel_Category']
+				channel_category.Channel_CategoryName = row['Channel_CategoryName']
 				channel_category_list.append(channel_category)
 			
 			return channel_category_list
@@ -299,13 +351,13 @@ class MySQLPersistenceWrapper(ApplicationBase):
 			self._logger.log_error(f'{inspect.currentframe().f_code.co_name}: {e}')
 	
 	def _populate_campaign_category_objects(self, results:List) ->List[Campaign_Category]:
-		"""Populate and returns a list of channel objects"""
+		"""Populate and returns a list of campaign objects"""
 		campaign_category_list = []
 		try:
 			for row in results:
 				campaign_category = Campaign_Category()
-				campaign_category.idCampaign_Category = row[self.CampaignCategoryColumns['idCampaign_Category'].value]
-				campaign_category.Campaign_CategoryName = row[self.CampaignCategoryColumns['Campaign_CategoryName'].value]
+				campaign_category.idCampaign_Category = row['idCampaign_Category']
+				campaign_category.Campaign_CategoryName = row['Campaign_CategoryName']
 				campaign_category_list.append(campaign_category)
 			
 			return campaign_category_list

@@ -26,17 +26,18 @@ class ConsoleUI(ApplicationBase):
     
     
     # Public Methods
-    # Public Methods
     def display_menu(self) ->None:
         """Display the menu"""
         print(f"\n\n\t\tCampaign Channel Application Menu")
         print()
         print(f"\t1. List Campaigns")
         print(f"\t2. List Channels")
-        print(f"\t3. Add Campaign")
-        print(f"\t4. Record Campaign")
-        print(f"\t5. Add Channel")
-        print(f"\t6. Exit")
+        print(f"\t3. List Channel Categories")
+        print(f"\t4. List Campaign Categories")
+        print(f"\t5. Add Campaign")
+        print(f"\t6. Record Campaign")
+        print(f"\t7. Add Channel")
+        print(f"\t8. Exit")
         print()
     
 
@@ -47,10 +48,12 @@ class ConsoleUI(ApplicationBase):
         match menu_choice[0]:
             case '1': self.list_campaigns()
             case '2': self.list_channels()
-            case '3': self.add_campaign()
-            case '4': self.record_campaign()
-            case '5': self.add_channel()
-            case '6': sys.exit()
+            case '3': self.list_channel_category()
+            case '4': self.list_campaign_category()
+            case '5': self.add_campaign()
+            case '6': self.record_campaign()
+            case '7': self.add_channel()
+            case '8': sys.exit()
             case _: print(f"Invalid Menu Choice {menu_choice[0]}")
     
     def list_campaigns(self)->None:
@@ -102,6 +105,32 @@ class ConsoleUI(ApplicationBase):
         self._logger.log_debug(f'{inspect.currentframe().f_code.co_name}: ' \
                                 f'{channels}')
     
+
+    def list_channel_category(self)->None:
+        """lists all channel categories"""
+
+        categories = self.app_services.get_all_channel_category()
+        category_table = ColorTable(theme=Themes.EARTH)
+        category_table.field_names = ['idChannel_Category', 'Category Name']
+        category_table.align = 'l'
+        for category in categories:
+            category_table.add_row([category.idChannel_Category, category.Channel_CategoryName])
+        print(category_table)
+        
+        self._logger.log_debug(f'{inspect.currentframe().f_code.co_name}: {categories}')
+
+    def list_campaign_category(self)->None:
+        """lists all channel categories"""
+
+        campaign_category = self.app_services.get_all_campaign_category()
+        campaign_category_table = ColorTable(theme=Themes.EARTH)
+        campaign_category_table.field_names = ['idCampaign_Category', 'Campaign Name']
+        campaign_category_table.align = 'l'
+        for campaign in campaign_category:
+            campaign_category_table.add_row([campaign.idCampaign_Category, campaign.Campaign_CategoryName])
+        print(campaign_category_table)
+        
+        self._logger.log_debug(f'{inspect.currentframe().f_code.co_name}: {campaign_category_table}')
 
     def add_campaign(self)->None:
         """add campaign"""

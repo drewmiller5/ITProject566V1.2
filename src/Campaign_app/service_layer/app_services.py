@@ -4,6 +4,9 @@ from campaign_app.application_base import ApplicationBase
 from campaign_app.persistence_layer.mysql_persistence_wrapper import MySQLPersistenceWrapper
 from campaign_app.infrastructure_layer.campaign import Campaign
 from campaign_app.infrastructure_layer.channel import Channel
+from campaign_app.infrastructure_layer.channel_category import Channel_Category
+from campaign_app.infrastructure_layer.company import Company
+from campaign_app.infrastructure_layer.campaign_category import Campaign_Category
 import inspect
 from typing import List, Dict
 
@@ -41,7 +44,28 @@ class AppServices(ApplicationBase):
         
         except Exception as e:
             self._logger.log_error(f'{inspect.currentframe().f_code.co_name}:{e}')
+        
+    def get_all_channel_category(self) ->List[Channel_Category]:
+        self._logger.log_debug(f'In {inspect.currentframe().f_code.co_name}()...')
+        channel_category_dict = {}
+        channel_category_dict['channel_cat'] =[]
+        try:
+            results = self.DB.select_all_channel_categories()
+            return results
+        
+        except Exception as e:
+            self._logger.log_error(f'{inspect.currentframe().f_code.co_name}:{e}')
     
+    def get_all_campaign_category(self) ->List[Campaign_Category]:
+        self._logger.log_debug(f'In {inspect.currentframe().f_code.co_name}()...')
+        channel_category_dict = {}
+        channel_category_dict['campaign_cat'] =[]
+        try:
+            results = self.DB.select_all_campaign_categories()
+            return results
+        
+        except Exception as e:
+            self._logger.log_error(f'{inspect.currentframe().f_code.co_name}:{e}')
     def create_campaign(self, campaign:Campaign)->Campaign:
         """Creates a  new campaign in the database"""
         self._logger.log_debug(f'In {inspect.currentframe().f_code.co_name}()...')
