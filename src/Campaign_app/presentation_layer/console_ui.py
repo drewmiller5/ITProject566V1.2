@@ -1,4 +1,4 @@
-"""Implements the applicatin user interface."""
+"""Implements the application user interface."""
 
 from campaign_app.application_base import ApplicationBase
 from campaign_app.service_layer.app_services import AppServices
@@ -35,10 +35,11 @@ class ConsoleUI(ApplicationBase):
         print(f"\t3. Update Campaign")
         print(f"\t4. List Channel")
         print(f"\t5. Add Channel")
-        print(f"\t6. List Campaign Category")
-        print(f"\t7. List Channel Category")
-        print(f"\t8. List Company")
-        print(f"\t9. Exit")
+        print(f"\t6. Update Channel")
+        print(f"\t7. List Campaign Category")
+        print(f"\t8. List Channel Category")
+        print(f"\t9. List Company")
+        print(f"\t10. Exit")
         print()
     
 
@@ -46,17 +47,18 @@ class ConsoleUI(ApplicationBase):
         """Proccess choices of menu"""
         menu_choice = input("\tMenu Choice: ")
 
-        match menu_choice[0]:
+        match menu_choice.strip():
             case '1': self.list_campaigns()
             case '2': self.add_campaign() 
             case '3': self.update_campaign()
             case '4': self.list_channels()
             case '5': self.add_channel()
-            case '6': self.list_campaign_category()
-            case '7': self.list_channel_category()
-            case '8': self.list_company()
-            case '9': sys.exit()
-            case _: print(f"Invalid Menu Choice {menu_choice[0]}")
+            case '6': self.update_channel()
+            case '7': self.list_campaign_category()
+            case '8': self.list_channel_category()
+            case '9': self.list_company()
+            case '10': sys.exit()
+            case _: print(f"Invalid Menu Choice {menu_choice}")
     
     def list_campaigns(self)->None:
         """Lists campaigns"""
@@ -159,6 +161,10 @@ class ConsoleUI(ApplicationBase):
     def add_channel(self)->None:
         """Add channel"""
         print("add_channel() method stub called....")
+    
+    def update_channel(self)->None:
+        """update channel"""
+        print("update channel() method stub called....")
 
     def start(self) ->None:
         while True:
