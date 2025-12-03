@@ -48,4 +48,3 @@ class Campaign():
             campaign_dict['channel'].append(item.__dict__)
 
         return json.dumps(campaign_dict)
-

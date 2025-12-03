@@ -33,13 +33,16 @@ class ConsoleUI(ApplicationBase):
         print(f"\t1. List Campaigns")
         print(f"\t2. Add Campaign")
         print(f"\t3. Update Campaign")
-        print(f"\t4. List Channel")
-        print(f"\t5. Add Channel")
-        print(f"\t6. Update Channel")
+        print(f"\t4. Drop Campaign")
+        print(f"\t5. List Channel")
+        print(f"\t6. Add Channel")
         print(f"\t7. List Campaign Category")
-        print(f"\t8. List Channel Category")
-        print(f"\t9. List Company")
-        print(f"\t10. Exit")
+        print(f"\t8. Add Campaign Category")
+        print(f"\t9. List Channel Category")
+        print(f"\t10. Add Channel Category")
+        print(f"\t11. List Company")
+        print(f"\t12. List Company")
+        print(f"\t13. Exit")
         print()
     
 
@@ -51,13 +54,16 @@ class ConsoleUI(ApplicationBase):
             case '1': self.list_campaigns()
             case '2': self.add_campaign() 
             case '3': self.update_campaign()
-            case '4': self.list_channels()
-            case '5': self.add_channel()
-            case '6': self.update_channel()
+            case '4': self.drop_campaign()
+            case '5': self.list_channels()
+            case '6': self.add_channel()
             case '7': self.list_campaign_category()
-            case '8': self.list_channel_category()
-            case '9': self.list_company()
-            case '10': sys.exit()
+            case '8': self.add_campaign_category()
+            case '9': self.list_channel_category()
+            case '10': self.add_channel_category()
+            case '11': self.list_company()
+            case '12': self.add_company()
+            case '13': sys.exit()
             case _: print(f"Invalid Menu Choice {menu_choice}")
     
     def list_campaigns(self)->None:
@@ -155,16 +161,30 @@ class ConsoleUI(ApplicationBase):
         print("add_campaign() method stub called....")
     
     def update_campaign(self)->None:
-        """record campaign"""
-        print("record_campaign() method stub called....")
+        """update campaign"""
+        print("update_campaign() method stub called....")
+    
+    def drop_campaign(self)->None:
+        """drop campaign"""
+        print("drop_campaign() method stub called....")
     
     def add_channel(self)->None:
         """Add channel"""
         print("add_channel() method stub called....")
     
-    def update_channel(self)->None:
-        """update channel"""
-        print("update channel() method stub called....")
+    def add_campaign_category(self)->None:
+        """add campaign category"""
+        print("add campaign category() method stub called....")
+    
+    def add_channel_category(self)->None:
+        """add channel category"""
+        print("add channel category() method stub called....")
+    
+    def add_company(self)->None:
+        """add company"""
+        print("add company() method stub called....")
+
+
 
     def start(self) ->None:
         while True:
