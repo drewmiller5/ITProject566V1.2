@@ -91,7 +91,8 @@ class ConsoleUI(ApplicationBase):
         
         channels = self.app_services.get_all_channels()
         channel_table = ColorTable(theme=Themes.EARTH)
-        channel_table.field_names =['id','Channel Name','idChannel_Category', 'Category']
+        channel_table.field_names =['id','Channel Name', 'Category'] 
+            # Removed Channel Category Id because wouldn't make sense
         category_table = ColorTable(theme=Themes.EARTH)
         category_table.field_names = ['Category Name']
         category_table.align = 'l'
@@ -99,8 +100,7 @@ class ConsoleUI(ApplicationBase):
             for channel_category in channel.CategoryName:
                 category_table.add_row([channel_category.Channel_CategoryName])
             
-            channel_table.add_row([channel.idChannel, channel.ChannelName,
-                                   channel.idChannel_Category, 
+            channel_table.add_row([channel.idChannel, channel.ChannelName, 
                                    category_table.get_string()])
             channel_table.add_divider()
             category_table.clear_rows()
