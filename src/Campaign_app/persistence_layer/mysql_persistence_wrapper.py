@@ -101,11 +101,44 @@ class MySQLPersistenceWrapper(ApplicationBase):
 		f"FROM company " \
 		f"ORDER BY idCompany" # Same problem as line 90
 		
-
+		# Insert Campaign
 		self.INSERT_CAMPAIGN = \
 		f"INSERT INTO Campaign " \
-		f"(idCampaign, Campaign_Name, StartDate, EndDate, idCompany, idCampaign_Category, Budget, Revenue) " \
+		f"(Campaign_Name, StartDate, EndDate, idCompany, idCampaign_Category, Budget, Revenue) " \
 		f"VALUES(%s, %s, %s, %s, %s, %s, %s)"
+
+		# Update campaign SQL
+		self.UPDATE_CAMPAIGN = \
+		f"UPDATE Campaign " \
+		f"SET Campaign_Name = %s, StartDate = %s, EndDate = %s, idCompany = %s, " \
+		f"idCampaign_Category = %s, Budget = %s, Revenue = %s " \
+		f"WHERE idCampaign = %s"
+
+		# Delete campaign SQL
+		self.DELETE_CAMPAIGN = \
+		f"DELETE FROM Campaign " \
+		f"WHERE idCampaign = %s"
+
+		# Insert Channel
+		self.INSERT_CHANNEL = \
+		f"INSERT INTO Channel (ChannelName, idChannel_Category) " \
+		f"VALUES (%s, %s)"
+		
+		# Insert Campaign Category
+		self.INSERT_CAMPAIGN_CATEGORY = \
+		f"INSERT INTO Campaign_Category (Campaign_CategoryName) " \
+		f"VALUES (%s)"
+		
+		# Insert Channel Category
+		self.INSERT_CHANNEL_CATEGORY = \
+		f"INSERT INTO Channel_Category (Channel_CategoryName) " \
+		f"VALUES (%s)"
+
+		# Insert Companies
+		self.INSERT_COMPANY = \
+		f"INSERT INTO Company (CompanyName) " \
+		f"VALUES (%s)"
+
 
 	# Lists all campaigns 
 	def select_all_campaigns(self)->List[Campaign]:
@@ -263,7 +296,8 @@ class MySQLPersistenceWrapper(ApplicationBase):
 			return company_list
 		except Exception as e:
 			self._logger.log_error(f'{inspect.currentframe().f_code.co_name}: {e}')
-
+	
+	# Create campaign
 	def create_campaign(self, campaign:Campaign)->Campaign:
 		"""Create a new record in the campaign table"""
 		cursor = None
@@ -274,17 +308,125 @@ class MySQLPersistenceWrapper(ApplicationBase):
 				with cursor:
 					cursor.execute(self.INSERT_CAMPAIGN, 
 						([campaign.Campaign_Name, campaign.StartDate, campaign.EndDate, 
-		campaign.idCompany, campaign.idCampaign_Category, campaign.Budget, campaign.Revenue]))
+						campaign.idCompany, campaign.idCampaign_Category, campaign.Budget, 
+						campaign.Revenue]))
 					connection.commit()
 					self._logger.log_debug(f'Updated {cursor.rowcount} row.')
 					self._logger.log_debug(f'Last Row ID: {cursor.lastrowid}.')
-					campaign.idCampaign, = cursor.lastrowid
+					campaign.idCampaign = cursor.lastrowid
 
 			return campaign
 
 		except Exception as e:
 			self._logger.log_error(f'{inspect.currentframe().f_code.co_name}: {e}')
+		
+	def update_campaign(self, campaign: Campaign) -> Campaign:
+		"""Update an existing campaign in the database."""
+		try:
+			connection = self._connection_pool.get_connection()
+			with connection:
+				cursor = connection.cursor()
+				with cursor:
+					cursor.execute(self.UPDATE_CAMPAIGN, (
+						campaign.Campaign_Name,
+						campaign.StartDate,
+						campaign.EndDate,
+						campaign.idCompany,
+						campaign.idCampaign_Category,
+						campaign.Budget,
+						campaign.Revenue,
+						campaign.idCampaign
+					))
+				connection.commit()
+				self._logger.log_debug(f"Updated {cursor.rowcount} campaign(s) with id {campaign.idCampaign}")
+			return campaign
+		except Exception as e:
+			self._logger.log_error(f"{inspect.currentframe().f_code.co_name}: {e}")
+	
+	
 
+	def delete_campaign(self, idcampaign: int):
+		try:
+			connection = self._connection_pool.get_connection()
+			with connection:
+				cursor = connection.cursor()
+				with cursor:
+					cursor.execute(self.DELETE_CAMPAIGN, (idcampaign,))
+				connection.commit()
+			return cursor.rowcount > 0
+		except Exception as e:
+			self._logger.log_error(f"delete_campaign: {e}")
+		
+	def create_channel(self, channel: Channel) -> Channel:
+		"""Add a new channel if it doesn't already exist"""
+		try:
+			connection = self._connection_pool.get_connection()
+			with connection:
+				cursor = connection.cursor()
+				with cursor:
+					cursor.execute(self.INSERT_CHANNEL, ([channel.ChannelName,channel.idChannel_Category]))
+				connection.commit()
+				channel.idChannel = cursor.lastrowid
+				self._logger.log_debug(f'Updated {cursor.rowcount} row.')
+				self._logger.log_debug(f'Last Row ID: {cursor.lastrowid}.')
+			return channel
+		except Exception as e:
+			self._logger.log_error(f"create_channel: {e}")
+	
+	def create_campaign_category(self, category: Campaign_Category) -> Campaign_Category:
+		"""Create a new campaign category record"""
+		try:
+			connection = self._connection_pool.get_connection()
+			with connection:
+				cursor = connection.cursor()
+				with cursor:
+					cursor.execute(
+						self.INSERT_CAMPAIGN_CATEGORY, 
+						(category.Campaign_CategoryName,)
+					)
+					connection.commit()
+					category.idCampaign_Category = cursor.lastrowid
+			return category
+		except Exception as e:
+			self._logger.log_error(f"create_campaign_category: {e}")
+
+	
+	def create_channel_category(self, category: Channel_Category) -> Channel_Category:
+		"""Create a new channel category record"""
+		try:
+			connection = self._connection_pool.get_connection()
+			with connection:
+				cursor = connection.cursor()
+				with cursor:
+					cursor.execute(
+						self.INSERT_CHANNEL_CATEGORY, 
+						(category.Channel_CategoryName,)
+					)
+					connection.commit()
+					category.idChannel_Category = cursor.lastrowid
+			return category
+		except Exception as e:
+			self._logger.log_error(f"create_channel_category: {e}")
+		
+	def create_company(self, company: Company) -> Company:
+		"""Create a new company record"""
+		try:
+			connection = self._connection_pool.get_connection()
+			with connection:
+				cursor = connection.cursor()
+				with cursor:
+					cursor.execute(
+						self.INSERT_COMPANY, 
+						(company.CompanyName,)
+					)
+					connection.commit()
+					company.idCompany = cursor.lastrowid
+			return company
+		except Exception as e:
+			self._logger.log_error(f"create_company: {e}")
+	
+
+			
 	
 
 		##### Private Utility Methods #####

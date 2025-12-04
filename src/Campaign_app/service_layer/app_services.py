@@ -86,13 +86,57 @@ class AppServices(ApplicationBase):
             return results
         except Exception as e:
             self._logger.log_error(f'{inspect.currentframe().f_code.co_name}:{e}')
-
-
-    def create_channel(self, channel:Channel)->Channel:
-        """Creates a  new channel in the database"""
+    
+    def update_campaign(self, campaign:Campaign)->Campaign:
+        """Creates a  new campaign in the database"""
         self._logger.log_debug(f'In {inspect.currentframe().f_code.co_name}()...')
         try:
-            results = self.DB.create_channel(channel)
+            results = self.DB.update_campaign(campaign)
             return results
         except Exception as e:
             self._logger.log_error(f'{inspect.currentframe().f_code.co_name}:{e}')
+    
+    def delete_campaign(self, idcampaign:int):
+        """Delete a campaign"""
+        self._logger.log_debug(f'In {inspect.currentframe().f_code.co_name}()...')
+        try:
+            return self.DB.delete_campaign(idcampaign)
+        except Exception as e:
+            self._logger.log_error(f"delete_campaign: {e}")
+    
+    def create_channel(self, channel: Channel) -> Channel:
+        """Create Channel"""
+        self._logger.log_debug(f"In {inspect.currentframe().f_code.co_name}()...")
+        try:
+            return self.DB.create_channel(channel)
+        except Exception as e:
+            self._logger.log_error(f"create_channel: {e}")
+    
+    def create_campaign_category(self, category: Campaign_Category) -> Campaign_Category:
+        """Create Campaign Category"""
+        self._logger.log_debug(f"In {inspect.currentframe().f_code.co_name}()...")
+        try:
+            return self.DB.create_campaign_category(category)
+        except Exception as e:
+            self._logger.log_error(f"create_campaign_category: {e}")
+
+    
+    def create_channel_category(self, category: Channel_Category) -> Channel_Category:
+        """Create Channel Category"""
+        self._logger.log_debug(f"In {inspect.currentframe().f_code.co_name}()...")
+        try:
+            return self.DB.create_channel_category(category)
+        except Exception as e:
+            self._logger.log_error(f"create_channel_category: {e}")
+    
+    def create_company(self, company: Company) -> Company:
+        """Create Company"""
+        self._logger.log_debug(f"In {inspect.currentframe().f_code.co_name}()...")
+        try:
+            return self.DB.create_company(company)
+        except Exception as e:
+            self._logger.log_error(f"create_company: {e}")
+
+
+
+        
