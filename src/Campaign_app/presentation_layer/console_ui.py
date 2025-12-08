@@ -7,7 +7,6 @@ from campaign_app.infrastructure_layer.campaign_category import Campaign_Categor
 from campaign_app.infrastructure_layer.channel import Channel
 from campaign_app.infrastructure_layer.channel_category import Channel_Category
 from campaign_app.infrastructure_layer.company import Company
-from prettytable import PrettyTable
 from prettytable.colortable import ColorTable, Themes
 from datetime import date
 import sys
@@ -182,21 +181,33 @@ class ConsoleUI(ApplicationBase):
 
             # 2. Start and End Date Validation
             while True:
-                start_date_str = input("Start Date (YYYY-MM-DD or YYYY/MM//DD): ").strip()
-                start_date_str = start_date_str.replace("/","-")
+                start_date_str = input("Start Date (YYYY-MM-DD or YYYY/MM/DD): ").strip()
+                start_date_str = start_date_str.replace("/", "-")
 
                 end_date_str = input("Leave blank if ongoing, format (YYYY-MM-DD or YYYY/MM//DD): ").strip()
-                if end_date_str == "":
-                    end_date = None
-                else:
-                    end_date_str = end_date_str.replace("/","-")
-                    end_date = date.fromisoformat(end_date_str)
+                
                 try:
                     start_date = date.fromisoformat(start_date_str)
-                    if end_date is not None and end_date < start_date:
-                        print("Error: End Date cannot be before Start Date.")
+                    
+                    if start_date > date.today():
+                        print("Invalid date. Date cannot be in the future")
+                        continue
+
+                    if end_date_str == "":
+                        end_date = None
                     else:
-                        break
+                        end_date_str = end_date_str.replace("/","-")
+                        end_date = date.fromisoformat(end_date_str)
+                    
+                        if end_date > date.today():
+                            print("Error: End Date cannot be in the future")
+                            continue
+                    
+                        if end_date is not None and end_date < start_date:
+                            print("Error: End Date cannot be before Start Date.")
+                            continue
+                    break
+                       
                 except ValueError:
                     print("Error: Invalid date format. Use YYYY-MM-DD.")
 
