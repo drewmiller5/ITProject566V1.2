@@ -176,12 +176,18 @@ class ConsoleUI(ApplicationBase):
 
             # 2. Start and End Date Validation
             while True:
-                start_date_str = input("Start Date (YYYY-MM-DD): ").strip()
-                end_date_str = input("End Date (YYYY-MM-DD): ").strip()
+                start_date_str = input("Start Date (YYYY-MM-DD or YYYY/MM//DD): ").strip()
+                start_date_str = start_date_str.replace("/","-")
+
+                end_date_str = input("Leave blank if ongoing, format (YYYY-MM-DD or YYYY/MM//DD): ").strip()
+                if end_date_str == "":
+                    end_date = None
+                else:
+                    end_date_str = end_date_str.replace("/","-")
+                    end_date = date.fromisoformat(end_date_str)
                 try:
                     start_date = date.fromisoformat(start_date_str)
-                    end_date = date.fromisoformat(end_date_str)
-                    if end_date < start_date:
+                    if end_date is not None and end_date < start_date:
                         print("Error: End Date cannot be before Start Date.")
                     else:
                         break

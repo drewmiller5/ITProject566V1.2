@@ -17,3 +17,5 @@ GRANT ALL PRIVILEGES ON `Campaign\_Channel\_user\_%`.*
 	TO 'Campaign_Channel_user'@'%';
 GRANT ALL PRIVILEGES ON `Campaign\_Channel`.* 
 	TO 'Campaign_Channel_user'@'%' WITH GRANT OPTION;
+
+COMMIT;

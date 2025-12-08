@@ -1,4 +1,4 @@
 -- Creating Database for Campaign Channel
-Drop DATABASE IF EXISTS `Campaign_Channel`;
+Drop DATABASE IF EXISTS `campaign_channel`;
 
 COMMIT;

@@ -1,6 +1,8 @@
 /* ******************************************
-  Drop and Campaign_Channel User
+  Drop and campaign_channel User
 ********************************************/
 
 -- Drop user if exists
-DROP USER IF EXISTS 'Campaign_Channel_user'@'localhost';
+DROP USER IF EXISTS 'campaign_channel_user'@'localhost';
+
+COMMIT;
