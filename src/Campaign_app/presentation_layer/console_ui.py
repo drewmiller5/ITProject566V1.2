@@ -77,6 +77,12 @@ class ConsoleUI(ApplicationBase):
         channel_table.field_names = ['Channel Name']
         channel_table.align = 'l'
         for campaign in campaigns:
+
+            # Adding commas to numbers
+            budget_fmt = f"{campaign.Budget:,}" if campaign.Budget is not None else ""
+            revenue_fmt = f"{campaign.Revenue:,}" if campaign.Revenue is not None else ""
+            netprofit_fmt = f"{campaign.NetProfit:,}" if campaign.NetProfit is not None else ""
+
             for channel in campaign.channel:
                 channel_table.add_row([channel.ChannelName])
             
@@ -86,9 +92,9 @@ class ConsoleUI(ApplicationBase):
                                     campaign.EndDate,
                                     campaign.idCompany,
                                     campaign.idCampaign_Category,
-                                    campaign.Budget,
-                                    campaign.Revenue,
-                                    campaign.NetProfit,
+                                    budget_fmt,
+                                    revenue_fmt,
+                                    netprofit_fmt,
                                     channel_table.get_string()])
             campaign_table.add_divider()
             channel_table.clear_rows()

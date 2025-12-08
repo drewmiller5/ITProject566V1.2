@@ -152,6 +152,10 @@ class MySQLPersistenceWrapper(ApplicationBase):
 			f"WHERE idCampaign = %s"
 
 		# Delete campaign SQL
+		self.DELETE_CAMPAIGN_CHANNEL_XREF = \
+			f"DELETE FROM campaign_channel_xref " \
+			f"WHERE idCampaign = %s"
+		
 		self.DELETE_CAMPAIGN = \
 			f"DELETE FROM Campaign " \
 			f"WHERE idCampaign = %s"
@@ -343,10 +347,20 @@ class MySQLPersistenceWrapper(ApplicationBase):
 			with connection:
 				cursor = connection.cursor()
 				with cursor:
-					cursor.execute(self.INSERT_CAMPAIGN, 
-						([campaign.Campaign_Name, campaign.StartDate, campaign.EndDate, 
-						campaign.idCompany, campaign.idCampaign_Category, campaign.Budget, 
-						campaign.Revenue]))
+					cursor.execute(
+						self.INSERT_CAMPAIGN, 
+						(
+							[
+								campaign.Campaign_Name, 
+								campaign.StartDate,
+								campaign.EndDate, 
+								campaign.idCompany,
+								campaign.idCampaign_Category,
+								campaign.Budget,
+								campaign.Revenue
+							]
+						)
+					)
 					connection.commit()
 					self._logger.log_debug(f'Updated {cursor.rowcount} row.')
 					self._logger.log_debug(f'Last Row ID: {cursor.lastrowid}.')
@@ -365,16 +379,18 @@ class MySQLPersistenceWrapper(ApplicationBase):
 			with connection:
 				cursor = connection.cursor()
 				with cursor:
-					cursor.execute(self.UPDATE_CAMPAIGN, (
-						campaign.Campaign_Name,
-						campaign.StartDate,
-						campaign.EndDate,
-						campaign.idCompany,
-						campaign.idCampaign_Category,
-						campaign.Budget,
-						campaign.Revenue,
-						campaign.idCampaign
-					))
+					cursor.execute(self.UPDATE_CAMPAIGN, 
+						(
+							campaign.Campaign_Name,
+							campaign.StartDate,
+							campaign.EndDate,
+							campaign.idCompany,
+							campaign.idCampaign_Category,
+							campaign.Budget,
+							campaign.Revenue,
+							campaign.idCampaign
+						)
+					)
 				connection.commit()
 				self._logger.log_debug(f"Updated {cursor.rowcount} campaign(s) with id {campaign.idCampaign}")
 			return campaign
@@ -389,7 +405,18 @@ class MySQLPersistenceWrapper(ApplicationBase):
 			with connection:
 				cursor = connection.cursor()
 				with cursor:
-					cursor.execute(self.DELETE_CAMPAIGN, (idcampaign,))
+					cursor.execute(
+						self.DELETE_CAMPAIGN_CHANNEL_XREF,
+						(
+							idcampaign,
+	   					)
+					)
+					cursor.execute(
+						self.DELETE_CAMPAIGN,
+						(
+							idcampaign,
+						)
+					)
 				connection.commit()
 			return cursor.rowcount > 0
 		except Exception as e:
@@ -403,7 +430,15 @@ class MySQLPersistenceWrapper(ApplicationBase):
 			with connection:
 				cursor = connection.cursor()
 				with cursor:
-					cursor.execute(self.INSERT_CHANNEL, ([channel.ChannelName,channel.idChannel_Category]))
+					cursor.execute(
+						self.INSERT_CHANNEL, 
+						(
+							[
+								channel.ChannelName,
+								channel.idChannel_Category
+							]
+						)
+					)
 				connection.commit()
 				channel.idChannel = cursor.lastrowid
 				self._logger.log_debug(f'Updated {cursor.rowcount} row.')
@@ -422,7 +457,9 @@ class MySQLPersistenceWrapper(ApplicationBase):
 				with cursor:
 					cursor.execute(
 						self.INSERT_CAMPAIGN_CATEGORY, 
-						(category.Campaign_CategoryName,)
+						(
+							category.Campaign_CategoryName,
+						)
 					)
 					connection.commit()
 					category.idCampaign_Category = cursor.lastrowid
@@ -440,7 +477,9 @@ class MySQLPersistenceWrapper(ApplicationBase):
 				with cursor:
 					cursor.execute(
 						self.INSERT_CHANNEL_CATEGORY, 
-						(category.Channel_CategoryName,)
+						(
+							category.Channel_CategoryName,
+						)
 					)
 					connection.commit()
 					category.idChannel_Category = cursor.lastrowid
@@ -458,7 +497,9 @@ class MySQLPersistenceWrapper(ApplicationBase):
 				with cursor:
 					cursor.execute(
 						self.INSERT_COMPANY, 
-						(company.CompanyName,)
+						(
+							company.CompanyName,
+						)
 					)
 					connection.commit()
 					company.idCompany = cursor.lastrowid

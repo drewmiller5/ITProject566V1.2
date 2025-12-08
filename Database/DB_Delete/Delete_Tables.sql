@@ -3,48 +3,48 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema Campaign_Channel
+-- Schema campaign_channel
 -- -----------------------------------------------------
-USE `Campaign_Channel` ;
+USE `campaign_channel` ;
 
 -- -----------------------------------------------------
--- Table `Campaign_Channel`.`Channel_Category`
+-- Table `campaign_channel`.`Channel_Category`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Campaign_Channel`.`Channel_Category` ;
-
-
--- -----------------------------------------------------
--- Table `Campaign_Channel`.`Channel`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `Campaign_Channel`.`Channel` ;
-
+DROP TABLE IF EXISTS `campaign_channel`.`Channel_Category` ;
 
 
 -- -----------------------------------------------------
--- Table `Campaign_Channel`.`Campaign_Category`
+-- Table `campaign_channel`.`Channel`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Campaign_Channel`.`Campaign_Category` ;
-
-
--- -----------------------------------------------------
--- Table `Campaign_Channel`.`Company`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `Campaign_Channel`.`Company` ;
+DROP TABLE IF EXISTS `campaign_channel`.`Channel` ;
 
 
 
 -- -----------------------------------------------------
--- Table `Campaign_Channel`.`Campaign`
+-- Table `campaign_channel`.`Campaign_Category`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Campaign_Channel`.`Campaign` ;
-
-
+DROP TABLE IF EXISTS `campaign_channel`.`Campaign_Category` ;
 
 
 -- -----------------------------------------------------
--- Table `Campaign_Channel`.`Campaign_channel_xref`
+-- Table `campaign_channel`.`Company`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Campaign_Channel`.`Campaign_channel_xref` ;
+DROP TABLE IF EXISTS `campaign_channel`.`Company` ;
+
+
+
+-- -----------------------------------------------------
+-- Table `campaign_channel`.`Campaign`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `campaign_channel`.`Campaign` ;
+
+
+
+
+-- -----------------------------------------------------
+-- Table `campaign_channel`.`campaign_channel_xref`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `campaign_channel`.`campaign_channel_xref` ;
 
 ENGINE = InnoDB;
 

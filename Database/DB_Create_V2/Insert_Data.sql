@@ -121,7 +121,7 @@ VALUES
    INSERT CAMPAIGN–CHANNEL RELATIONSHIPS
 ============================================ */
 
-INSERT INTO Campaign_channel_xref (idChannel, idCampaign) VALUES
+INSERT INTO campaign_channel_xref (idChannel, idCampaign) VALUES
 -- 1 Lamborghini
 (18,1),
 
