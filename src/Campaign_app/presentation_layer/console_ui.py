@@ -66,6 +66,7 @@ class ConsoleUI(ApplicationBase):
             case '13': sys.exit()
             case _: print(f"Invalid Menu Choice {menu_choice}")
     
+
     def list_campaigns(self)->None:
         """Lists campaigns"""
         campaigns = self.app_services.get_all_campaigns()
@@ -79,10 +80,15 @@ class ConsoleUI(ApplicationBase):
             for channel in campaign.channel:
                 channel_table.add_row([channel.ChannelName])
             
-            campaign_table.add_row([campaign.idCampaign, campaign.Campaign_Name,
-                                    campaign.StartDate, campaign.EndDate,
-                                    campaign.idCompany, campaign.idCampaign_Category,
-                                    campaign.Budget, campaign.Revenue, campaign.NetProfit,
+            campaign_table.add_row([campaign.idCampaign,
+                                    campaign.Campaign_Name,
+                                    campaign.StartDate,
+                                    campaign.EndDate,
+                                    campaign.idCompany,
+                                    campaign.idCampaign_Category,
+                                    campaign.Budget,
+                                    campaign.Revenue,
+                                    campaign.NetProfit,
                                     channel_table.get_string()])
             campaign_table.add_divider()
             channel_table.clear_rows()
@@ -94,7 +100,6 @@ class ConsoleUI(ApplicationBase):
 
     def list_channels(self)->None: 
         """Lists channels with their category"""
-        
         channels = self.app_services.get_all_channels()
         channel_table = ColorTable(theme=Themes.EARTH)
         channel_table.field_names =['id','Channel Name', 'Category'] 
@@ -118,7 +123,6 @@ class ConsoleUI(ApplicationBase):
 
     def list_channel_category(self)->None:
         """lists all channel categories"""
-
         categories = self.app_services.get_all_channel_category()
         category_table = ColorTable(theme=Themes.EARTH)
         category_table.field_names = ['idChannel_Category', 'Category Name']
@@ -129,9 +133,9 @@ class ConsoleUI(ApplicationBase):
         
         self._logger.log_debug(f'{inspect.currentframe().f_code.co_name}: {categories}')
 
+
     def list_campaign_category(self)->None:
         """lists all channel categories"""
-
         campaign_category = self.app_services.get_all_campaign_category()
         campaign_category_table = ColorTable(theme=Themes.EARTH)
         campaign_category_table.field_names = ['idCampaign_Category', 'Campaign Name']
@@ -142,9 +146,9 @@ class ConsoleUI(ApplicationBase):
         
         self._logger.log_debug(f'{inspect.currentframe().f_code.co_name}: {campaign_category_table}')
 
+
     def list_company(self)->None:
         """list companies"""
-
         companies = self.app_services.get_all_companies()
         company_table = ColorTable(theme=Themes.EARTH)
         company_table.field_names = ['CompanyId', 'Company Name']
@@ -294,7 +298,6 @@ class ConsoleUI(ApplicationBase):
         except Exception as e:
             print(f"Error: {e}")
 
-
     
     def drop_campaign(self) -> None:
         """Delete a campaign"""
@@ -399,8 +402,7 @@ class ConsoleUI(ApplicationBase):
             print(f"Campaign Category '{new_category.Campaign_CategoryName}' added successfully with ID {new_category.idCampaign_Category}.")
         else:
             print("Error adding campaign category.")
-
-
+    
     
     def add_channel_category(self) -> None:
         """Add a new channel category"""
@@ -450,8 +452,6 @@ class ConsoleUI(ApplicationBase):
             print(f"Company '{new_company.CompanyName}' added successfully with ID {new_company.idCompany}.")
         else:
             print("Error adding company.")
-
-
 
 
     def start(self) ->None:

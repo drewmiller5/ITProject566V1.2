@@ -8,7 +8,7 @@ from campaign_app.infrastructure_layer.channel_category import Channel_Category
 from campaign_app.infrastructure_layer.company import Company
 from campaign_app.infrastructure_layer.campaign_category import Campaign_Category
 import inspect
-from typing import List, Dict
+from typing import List
 
 class AppServices(ApplicationBase):
     """AppServices Class Definition."""

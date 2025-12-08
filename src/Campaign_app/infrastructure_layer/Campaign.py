@@ -2,9 +2,6 @@ import json
 from datetime import date
 from decimal import Decimal
 from campaign_app.infrastructure_layer.channel import Channel
-from campaign_app.infrastructure_layer.campaign_category import Campaign_Category
-from campaign_app.infrastructure_layer.company import Company
-from campaign_app.infrastructure_layer.channel_category import Channel_Category
 from typing import List
 
 
