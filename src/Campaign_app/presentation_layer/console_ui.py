@@ -71,7 +71,7 @@ class ConsoleUI(ApplicationBase):
         campaigns = self.app_services.get_all_campaigns()
         campaign_table = ColorTable(theme=Themes.EARTH)
         campaign_table.field_names =['id','Campaign Name','Start Date','End Date',
-                                     'Company','Campaign Category','Budget','Revenue', 'Net Profit', 'Channels']
+                                     'Company ID','Campaign Category ID','Budget','Revenue', 'Net Profit', 'Channels']
         channel_table = ColorTable(theme=Themes.EARTH)
         channel_table.field_names = ['Channel Name']
         channel_table.align = 'l'
