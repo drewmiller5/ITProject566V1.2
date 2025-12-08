@@ -109,7 +109,6 @@ class MySQLPersistenceWrapper(ApplicationBase):
 			f"WHERE (cx.idCampaign = %s) AND (c.idChannel = cx.idChannel)"
 		
 		# List all channels SQL
-		
 		self.SELECT_ALL_CHANNELS = \
 			f"SELECT idChannel, ChannelName, idChannel_Category " \
 			f"FROM Channel"
