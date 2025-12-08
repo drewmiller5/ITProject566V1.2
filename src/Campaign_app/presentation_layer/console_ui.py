@@ -71,7 +71,8 @@ class ConsoleUI(ApplicationBase):
         campaigns = self.app_services.get_all_campaigns()
         campaign_table = ColorTable(theme=Themes.EARTH)
         campaign_table.field_names =['id','Campaign Name','Start Date','End Date',
-                                     'Company ID','Campaign Category ID','Budget','Revenue', 'Net Profit', 'Channels']
+                                     'Company ID','Campaign Category ID','Budget',
+                                     'Revenue', 'Net Profit', 'Channels']
         channel_table = ColorTable(theme=Themes.EARTH)
         channel_table.field_names = ['Channel Name']
         channel_table.align = 'l'
@@ -146,7 +147,8 @@ class ConsoleUI(ApplicationBase):
         campaign_category_table.field_names = ['idCampaign_Category', 'Campaign Name']
         campaign_category_table.align = 'l'
         for campaign in campaign_category:
-            campaign_category_table.add_row([campaign.idCampaign_Category, campaign.Campaign_CategoryName])
+            campaign_category_table.add_row([campaign.idCampaign_Category, 
+                                             campaign.Campaign_CategoryName])
         print(campaign_category_table)
         
         self._logger.log_debug(f'{inspect.currentframe().f_code.co_name}: {campaign_category_table}')
